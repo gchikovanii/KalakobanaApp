@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {  faCaretDown, faSignOutAlt, faTachometerAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,6 +21,28 @@ export class ProfileComponent {
   }
   closeDropdown() {
     this.isNavbarOpen = false;
+  }
+
+  showProfileForm: boolean = true;
+  showSubscriptionForm: boolean = false;
+  activeView: string = 'profile'; 
+
+  toggleView(view: string) {
+    this.activeView = view; 
+    if (view === 'profile') {
+      this.showProfileForm = true;
+      this.showSubscriptionForm = false;
+    } else if (view === 'subscription') {
+      this.showProfileForm = false;
+      this.showSubscriptionForm = true;
+    }
+  }
+  router = inject(Router);
+  goToProfile(){
+    this.router.navigate(['/profile']);
+  }
+  logOut(){
+    this.router.navigate(['/']);
   }
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
