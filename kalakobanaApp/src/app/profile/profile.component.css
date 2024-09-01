@@ -1,0 +1,58 @@
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f8f9fa;
+    color: #161931;
+}
+
+.btn-primary {
+    background-color: #202142;
+    color: #ffffff;
+    border-color: #202142;
+}
+
+.btn-primary:hover {
+    background-color: #2f2c62;
+    border-color: #2f2c62;
+}
+
+.input-primary {
+    background-color: #eef2ff;
+    border-color: #d1d5eb;
+    color: #202142;
+}
+
+.input-primary:focus {
+    border-color: #202142;
+    box-shadow: 0 0 0 3px rgba(32, 33, 66, 0.1);
+}
+
+
+
+@media (min-width: 1024px) {
+    /* Show name alongside profile image on larger screens */
+    .lg\:inline-block {
+      display: inline-block !important;
+    }
+  
+    .lg\:hidden {
+      display: none !important;
+    }
+  }
+  
+  button img {
+    transition: transform 0.2s ease;
+  }
+  
+  button:hover img {
+    transform: scale(1.1);
+  }
+  
+  button span {
+    transition: color 0.2s ease;
+  }
+  
+  button:hover span {
+    color: #c5a5fd;
+  }
+
+  
