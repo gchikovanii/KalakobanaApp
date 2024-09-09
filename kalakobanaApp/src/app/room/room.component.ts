@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCommentDots, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';  
 
 @Component({
@@ -76,6 +76,37 @@ export class RoomComponent implements OnInit {
       if (index + 1 < this.totalRounds) {
         this.currentRound++;
       }
+    }
+  }
+
+  faCommentDots = faCommentDots;
+  isChatOpen = false;
+  newMessage = '';
+  messages = [
+    {
+      userName: 'მომხარებელი1',
+      userImage: 'path_to_image1.jpg',
+      text: 'სალამი!',
+    },
+    {
+      userName: 'მომხარებელი2',
+      userImage: 'path_to_image2.jpg',
+      text: 'სალამი მომარებელი1!',
+    }
+  ];
+
+  toggleChat() {
+    this.isChatOpen = !this.isChatOpen;
+  }
+
+  sendMessage() {
+    if (this.newMessage.trim() !== '') {
+      this.messages.push({
+        userName: 'Current User', // Set to the actual user name
+        userImage: 'path_to_current_user_image.jpg', // Set to the actual user image
+        text: this.newMessage
+      });
+      this.newMessage = ''; // Clear the input
     }
   }
 }

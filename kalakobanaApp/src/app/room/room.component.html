@@ -60,8 +60,41 @@
       </tbody>
     </table>
   </div>
-  
-
-
-  </div>
+</div>
  
+
+
+  <div class="chat-toggle" (click)="toggleChat()">
+    <fa-icon [icon]="faCommentDots"></fa-icon>
+  </div>
+  
+  <div class="chat-box" [ngClass]="{'hidden': !isChatOpen}">
+    <div class="chat-header">
+      <h3>ჩატი</h3>
+      <button class="close-btn mr-2" (click)="toggleChat()">X</button>
+    </div>
+    
+    <div class="chat-content">
+      <div *ngFor="let message of messages">
+        <div class="message">
+          <img src="logo_1.jpeg" alt="User Image" class="user-image">
+          <div class="message-content">
+            <strong>{{ message.userName }}</strong>
+            <p>{{ message.text }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chat-input">
+      <input [(ngModel)]="newMessage" type="text" placeholder="Type a message..." class="message-input">
+      <button (click)="sendMessage()" class="send-btn">Send</button>
+    </div>
+  </div>
+
+
+
+
+
+
+
