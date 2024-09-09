@@ -24,11 +24,11 @@
   </nav>
   
 <!-- Mobile Navbar -->
-<div [class.hidden]="!navbarOpen" class="navbar-menu relative z-50 lg:hidden">
+<div [class.hidden]="!navbarOpen" class="navbar-menu relative z-50 lg:hidden h-100">
     <div (click)="toggleNavbar()" class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-50"></div>
     <nav class="fixed bg-gradient-to-r from-cyan-500 to-blue-600 dark:bg-gradient-to-r dark:from-blue-800 dark:to-cyan-700 top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 border-r overflow-y-auto">
       <div class="flex items-center mb-8">
-        <a class="mr-auto text-2xl font-bold text-violet-600 dark:text-gray-100" href="#">
+        <a class="mr-auto text-2xl font-bold text-violet-600 dark:text-gray-100">
           ქალაქობანა
         </a>
         <button (click)="toggleNavbar()" class="navbar-close">
@@ -36,11 +36,11 @@
         </button>
       </div>
       <div class="flex flex-col space-y-2 mt-2">
-        <a href="#" class="block py-1.5 px-3 flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:bg-gradient-to-bl dark:bg-violet-700 dark:hover:bg-violet-500">
+        <a routerLink="/profile" class="block py-1.5 px-3 flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:bg-gradient-to-bl dark:bg-violet-700 dark:hover:bg-violet-500">
           <fa-icon class="mr-2" [icon]="faUserPlus"></fa-icon>
           რეგისტრაცია
         </a>
-        <a href="#" class="block py-1.5 px-3 flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:bg-gradient-to-bl dark:bg-violet-700 dark:hover:bg-violet-500">
+        <a routerLink="/game-hub" class="block py-1.5 px-3 flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:bg-gradient-to-bl dark:bg-violet-700 dark:hover:bg-violet-500">
           <fa-icon class="mr-2" [icon]="faSignInAlt"></fa-icon>
           ავტორიზაცია
         </a>
@@ -51,8 +51,8 @@
     </nav>
   </div>
 
-<section class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800">
-  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:space-x-12">
+  <section class="min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 flex items-center justify-center">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:space-x-12">
     
     <!-- About Kalakobana Section -->
     <div class="lg:w-1/2 flex flex-col justify-center text-center lg:text-left mb-8 lg:mb-0 animate-fadeInUp">
