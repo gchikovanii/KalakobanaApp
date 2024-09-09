@@ -4,12 +4,6 @@
     <a class="text-2xl font-bold text-violet-600 dark:text-white" href="#">
       ქალაქობანა
     </a>
-  
-    
-    <!-- Middle Section: Random Letter and Round -->
-    <!-- <div class="text-white text-center text-lg md:text-xl font-medium">
-        ასო ბგერა  {{ randomLetter }}
-    </div> -->
 
     <div class="text-white text-center text-lg md:text-xl font-medium">
         <span [ngClass]="{'animate-letter': letterAnimated}" (animationend)="onAnimationEnd()">
@@ -28,7 +22,7 @@
 
  <!-- Round Display -->
  <div class="text-center text-white font-bold py-2">
-    მიმდინარე რაუნდი: {{ currentRound }}/{{ totalRounds }}
+    მიმდინარე რაუნდი: {{ rountToDisplay }}/{{ totalRounds }}
   </div>
   
   <div class="container mx-auto mt-6 overflow-x-auto">

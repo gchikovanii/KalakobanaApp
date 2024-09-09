@@ -60,10 +60,11 @@ export class RoomComponent implements OnInit {
     this.letterAnimated = true;
     return letter;
   }
-
+  rountToDisplay =0;
   startStopRow(index: number) {
     if (!this.rows[index].started) {
       // Start the row and generate a new random letter
+      this.rountToDisplay++;
       this.rows[index].enabled = true;
       this.rows[index].started = true;
       this.randomLetter = this.generateNewLetter(); // Set the new random letter
