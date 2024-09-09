@@ -57,6 +57,7 @@ export class RoomComponent implements OnInit {
 
     // Add the new letter to the used letters array
     this.usedLetters.push(letter);
+    this.letterAnimated = true;
     return letter;
   }
 
@@ -108,5 +109,10 @@ export class RoomComponent implements OnInit {
       });
       this.newMessage = ''; // Clear the input
     }
+  }
+  letterAnimated = false;
+
+  onAnimationEnd() {
+    this.letterAnimated = false;
   }
 }

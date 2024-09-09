@@ -5,10 +5,19 @@
       ქალაქობანა
     </a>
   
+    
     <!-- Middle Section: Random Letter and Round -->
+    <!-- <div class="text-white text-center text-lg md:text-xl font-medium">
+        ასო ბგერა  {{ randomLetter }}
+    </div> -->
+
     <div class="text-white text-center text-lg md:text-xl font-medium">
-        ასო ბგერა - {{ randomLetter }}
+        <span [ngClass]="{'animate-letter': letterAnimated}" (animationend)="onAnimationEnd()">
+            ასო ბგერა {{ randomLetter }}
+        </span>
     </div>
+
+
     <!-- Profile Dropdown Section -->
     <button type="button" (click)="logOut()" class="flex items-center justify-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center md:ms-2 mb-2 md:mb-0">
       <fa-icon class="mr-2" [icon]="faSignOutAlt"></fa-icon>
