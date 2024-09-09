@@ -1,0 +1,35 @@
+  
+  .dark tr:hover {
+    background-color: #4c51bf; 
+  }
+  
+  tr:hover button {
+    color: white; 
+  }
+  
+  button:hover {
+    text-color: #c5a5fd;
+  }
+
+  .animated-tooltip {
+    position: absolute;
+    bottom: 110%; 
+    left: 50%;
+    transform: translateX(-50%); 
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0; 
+    visibility: hidden;
+    pointer-events: none; 
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 9999; 
+}
+
+button:hover + .animated-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
