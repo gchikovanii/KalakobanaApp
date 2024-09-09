@@ -16,5 +16,17 @@ export class RoomComponent {
   logOut(){
     this.router.navigate(['/game-hub']);
   }
-  
+  randomLetter: string = '';
+  currentRound: number = 0;
+  totalRounds: number = 12;
+
+  ngOnInit(): void {
+    this.generateRandomLetter();
+  }
+
+  generateRandomLetter(): void {
+    const alphabet = 'აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭჯხჰ';
+    const randomIndex = Math.floor(Math.random() * alphabet.length);
+    this.randomLetter = alphabet[randomIndex];
+  }
 }
