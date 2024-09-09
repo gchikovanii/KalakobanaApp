@@ -24,4 +24,13 @@ export class GameHubComponent {
   refresh(){
     //Refetch Data
   }
+  isFormOpen = false;
+
+  openForm() {
+    this.isFormOpen = true;
+  }
+
+  closeForm() {
+    this.isFormOpen = false;
+  }
 }
