@@ -21,5 +21,7 @@ export class GameHubComponent {
     this.selectedRoom = room;
   }
 
-  
+  refresh(){
+    //Refetch Data
+  }
 }
