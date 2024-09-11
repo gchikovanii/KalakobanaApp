@@ -17,18 +17,13 @@
       <fa-icon class="mr-2" [icon]="faSignOutAlt"></fa-icon>
       ოთახიდან გამოსვლა
     </button>
-  </nav>
-  <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
-
- <!-- Round Display -->
- <div class="text-center text-white font-bold py-2">
-    მიმდინარე რაუნდი: {{ rountToDisplay }}/{{ totalRounds }}
-  </div>
-  
+</nav>
+@if(roundIsFinished() && currentRound > 0){
   <div class="container mx-auto mt-6 overflow-x-auto">
     <table class="min-w-full table-auto border-collapse bg-gradient-to-r from-blue-800 to-cyan-700 text-white rounded-lg shadow-lg">
       <thead>
         <tr class="text-indigo-700 uppercase bg-indigo-50 dark:bg-indigo-700 dark:text-white">
+          <th class="px-4 py-2">მომხმარებელი</th>
           <th class="px-4 py-2">სახელი</th>
           <th class="px-4 py-2">გვარი</th>
           <th class="px-4 py-2">ქალაქი</th>
@@ -36,34 +31,81 @@
           <th class="px-4 py-2">მცენარე</th>
           <th class="px-4 py-2">ცხოველი</th>
           <th class="px-4 py-2">ფილმი</th>
-          <th class="px-4 py-2">მოქმედება</th>
           <th class="px-4 py-2">ჯამი</th>
         </tr>
       </thead>
       <tbody>
 
-        <tr *ngFor="let row of rows; let i = index" [ngClass]="{'bg-gradient-to-r from-blue-700 to-blue-900 ': i % 2 === 0, 'bg-gradient-to-r from-blue-650 to-cyan-850': i % 2 !== 0 }">
-          <td><input type="text" [(ngModel)]="row.firstName" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.lastName" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.city" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.country" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.animals" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.plants" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.movies" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-          <td>
-            <button *ngIf="i === currentRound" (click)="startStopRow(i)" 
-            class="text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-1 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-            {{ row.started ? 'სტოპ' : 'დაწყება' }}
-            </button>
-          </td>
-          <td>
-            <span *ngIf="row.completed" class="text-xl font-bold text-violet-600 dark:text-white ">15</span>
-          </td>
+        <tr *ngFor="let row of resultRows; let i = index" [ngClass]="{'bg-gradient-to-r from-blue-700 to-blue-900 ': i % 2 === 0, 'bg-gradient-to-r from-blue-650 to-cyan-850': i % 2 !== 0 }">
+          <td><input type="text" [(ngModel)]="row.userName" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
+          <td><input type="text" [(ngModel)]="row.firstName" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
+          <td><input type="text" [(ngModel)]="row.lastName" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
+          <td><input type="text" [(ngModel)]="row.city" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
+          <td><input type="text" [(ngModel)]="row.country" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
+          <td><input type="text" [(ngModel)]="row.animals" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
+          <td><input type="text" [(ngModel)]="row.plants" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
+          <td><input type="text" [(ngModel)]="row.movies" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
+          <td><input type="text" [(ngModel)]="row.result" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
         </tr>
       </tbody>
     </table>
+    <button (click)="continueGame()"
+    class="text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-1 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+        გაგრძელება
+    </button>
   </div>
-</div>
+}
+@else {
+  <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
+
+    <!-- Round Display -->
+    <div class="text-center text-white font-bold py-2">
+       მიმდინარე რაუნდი: {{ rountToDisplay }}/{{ totalRounds }}
+     </div>
+     
+     <div class="container mx-auto mt-6 overflow-x-auto">
+       <table class="min-w-full table-auto border-collapse bg-gradient-to-r from-blue-800 to-cyan-700 text-white rounded-lg shadow-lg">
+         <thead>
+           <tr class="text-indigo-700 uppercase bg-indigo-50 dark:bg-indigo-700 dark:text-white">
+             <th class="px-4 py-2">სახელი</th>
+             <th class="px-4 py-2">გვარი</th>
+             <th class="px-4 py-2">ქალაქი</th>
+             <th class="px-4 py-2">ქვეყანა</th>
+             <th class="px-4 py-2">მცენარე</th>
+             <th class="px-4 py-2">ცხოველი</th>
+             <th class="px-4 py-2">ფილმი</th>
+             <th class="px-4 py-2">მოქმედება</th>
+             <th class="px-4 py-2">ჯამი</th>
+           </tr>
+         </thead>
+         <tbody>
+   
+           <tr *ngFor="let row of rows; let i = index" [ngClass]="{'bg-gradient-to-r from-blue-700 to-blue-900 ': i % 2 === 0, 'bg-gradient-to-r from-blue-650 to-cyan-850': i % 2 !== 0 }">
+             <td><input type="text" [(ngModel)]="row.firstName" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.lastName" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.city" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.country" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.animals" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.plants" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.movies" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
+             <td>
+               <button *ngIf="i === currentRound" (click)="startStopRow(i)" 
+               class="text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-1 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+               {{ row.started ? 'სტოპ' : 'დაწყება' }}
+               </button>
+             </td>
+             <td>
+               @if(row.completed){
+                 <span class="text-xl font-bold text-violet-600 dark:text-white ">15</span>
+               }
+             </td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+   </div>
+}
+
  
 
 

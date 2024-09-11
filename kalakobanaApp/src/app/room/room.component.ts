@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCommentDots, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class RoomComponent implements OnInit {
   faSignOutAlt = faSignOutAlt;
   router = inject(Router);
-
+  roundIsFinished = signal(false);
   // Array to keep track of used letters
   usedLetters: string[] = [];
 
@@ -25,7 +25,41 @@ export class RoomComponent implements OnInit {
   totalRounds: number = 12;
 
   rows: any[] = [];
-
+  resultRows: any[] = [
+    {
+      userName: 'user1',
+      firstName: 'John',
+      lastName: 'Doe',
+      city: 'New York',
+      country: 'USA',
+      animals: 'Dogs, Cats',
+      plants: 'Cactus, Fern',
+      movies: 'Inception, Matrix',
+      result: '150'
+    },
+    {
+      userName: 'user2',
+      firstName: 'Jane',
+      lastName: 'Smith',
+      city: 'London',
+      country: 'UK',
+      animals: 'Rabbits, Horses',
+      plants: 'Rose, Tulip',
+      movies: 'Titanic, Avatar',
+      result: '30'
+    },
+    {
+      userName: 'user3',
+      firstName: 'Alex',
+      lastName: 'Johnson',
+      city: 'Sydney',
+      country: 'Australia',
+      animals: 'Kangaroo, Koala',
+      plants: 'Eucalyptus, Acacia',
+      movies: 'Mad Max, Crocodile Dundee',
+      result: '45'
+    }
+  ];
   logOut() {
     this.router.navigate(['/game-hub']);
   }
@@ -73,14 +107,17 @@ export class RoomComponent implements OnInit {
       this.rows[index].enabled = false;
       this.rows[index].completed = true;
       this.rows[index].started = false;
-
+      this.roundIsFinished.set(true);
       // Enable the next row
       if (index + 1 < this.totalRounds) {
         this.currentRound++;
       }
     }
   }
+  continueGame(){
+    this.roundIsFinished.set(false);
 
+  }
   faCommentDots = faCommentDots;
   isChatOpen = false;
   newMessage = '';
