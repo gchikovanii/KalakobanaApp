@@ -126,7 +126,6 @@ export class RoomComponent implements OnInit {
       // Mark the round as finished
       this.roundIsFinished.set(true);
   
-      // Check if it's the last row/round
       if (index + 1 < this.totalRounds) {
         // Enable the next row (if it's not the last one)
         this.currentRound++;
