@@ -4,13 +4,27 @@ import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCommentDots, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';  
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-room',
   standalone: true,
   imports: [FontAwesomeModule, CommonModule, FormsModule],
   templateUrl: './room.component.html',
-  styleUrl: './room.component.css'
+  styleUrl: './room.component.css',
+  animations: [
+    trigger('fadeInSequential', [
+      transition(':enter', [
+        query('td', [
+          style({ opacity: 0 }),
+          stagger(100, [
+            animate('300ms', style({ opacity: 1 }))
+          ])
+        ], { optional: true })
+      ])
+    ])
+  ],
+  
 })
 export class RoomComponent implements OnInit {
   faSignOutAlt = faSignOutAlt;
@@ -28,38 +42,39 @@ export class RoomComponent implements OnInit {
   resultRows: any[] = [
     {
       userName: 'user1',
-      firstName: 'John',
-      lastName: 'Doe',
-      city: 'New York',
-      country: 'USA',
-      animals: 'Dogs, Cats',
-      plants: 'Cactus, Fern',
-      movies: 'Inception, Matrix',
+      firstName: { v: 'John', p: 10 },  
+      lastName: { v: 'Doe', p: 15 },     
+      city: { v: 'New York', p: 5 },     
+      country: { v: 'USA', p: 10 },      
+      animals: { v: 'Dogs, Cats', p: 15 }, 
+      plants: { v: 'Cactus, Fern', p: 5 },
+      movies: { v: 'Inception, Matrix', p: 10 }, 
       result: '150'
     },
     {
       userName: 'user2',
-      firstName: 'Jane',
-      lastName: 'Smith',
-      city: 'London',
-      country: 'UK',
-      animals: 'Rabbits, Horses',
-      plants: 'Rose, Tulip',
-      movies: 'Titanic, Avatar',
+      firstName: { v: 'Jane', p: 5 },  
+      lastName: { v: 'Smith', p: 10 }, 
+      city: { v: 'London', p: 15 },    
+      country: { v: 'UK', p: 5 },      
+      animals: { v: 'Rabbits, Horses', p: 10 }, 
+      plants: { v: 'Rose, Tulip', p: 5 }, 
+      movies: { v: 'Titanic, Avatar', p: 15 },
       result: '30'
     },
     {
       userName: 'user3',
-      firstName: 'Alex',
-      lastName: 'Johnson',
-      city: 'Sydney',
-      country: 'Australia',
-      animals: 'Kangaroo, Koala',
-      plants: 'Eucalyptus, Acacia',
-      movies: 'Mad Max, Crocodile Dundee',
+      firstName: { v: 'Alex', p: 10 },  
+      lastName: { v: 'Johnson', p: 15 }, 
+      city: { v: 'Sydney', p: 5 },     
+      country: { v: 'Australia', p: 10 }, 
+      animals: { v: 'Kangaroo, Koala', p: 15 }, 
+      plants: { v: 'Eucalyptus, Acacia', p: 10 }, 
+      movies: { v: 'Mad Max, Crocodile Dundee', p: 15 },
       result: '45'
     }
   ];
+  
   logOut() {
     this.router.navigate(['/game-hub']);
   }

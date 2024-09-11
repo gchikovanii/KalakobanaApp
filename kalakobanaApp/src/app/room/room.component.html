@@ -19,6 +19,8 @@
     </button>
 </nav>
 @if(roundIsFinished() && currentRound > 0){
+  <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
+
   <div class="container mx-auto mt-6 overflow-x-auto">
     <table class="min-w-full table-auto border-collapse bg-gradient-to-r from-blue-800 to-cyan-700 text-white rounded-lg shadow-lg">
       <thead>
@@ -34,27 +36,90 @@
           <th class="px-4 py-2">ჯამი</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody [@fadeInSequential]>
 
-        <tr *ngFor="let row of resultRows; let i = index" [ngClass]="{'bg-gradient-to-r from-blue-700 to-blue-900 ': i % 2 === 0, 'bg-gradient-to-r from-blue-650 to-cyan-850': i % 2 !== 0 }">
-          <td><input type="text" [(ngModel)]="row.userName" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.firstName" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.lastName" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.city" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.country" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.animals" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.plants" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.movies" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
-          <td><input type="text" [(ngModel)]="row.result" [disabled]="true" class="text-black px-4 py-2 w-full"></td>
-        </tr>
+        <tr *ngFor="let row of resultRows; let i = index" 
+        [ngClass]="{'bg-gradient-to-r from-blue-700 to-blue-900 ': i % 2 === 0, 
+                   'bg-gradient-to-r from-blue-650 to-cyan-850': i % 2 !== 0 }">
+      
+      <td>
+        <div class="flex items-center">
+          <input type="text" [ngModel]="row.userName" 
+                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        </div>
+      </td>
+    
+      <td>
+        <div class="flex items-center">
+          <input type="text" [ngModel]="row.firstName.p + 'ქ - ' + row.firstName.v" 
+                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        </div>
+      </td>
+    
+      <td>
+        <div class="flex items-center">
+          <input type="text" [ngModel]="row.lastName.p + 'ქ - ' + row.lastName.v" 
+                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        </div>
+      </td>
+    
+      <td>
+        <div class="flex items-center">
+          <input type="text" [ngModel]="row.city.p + 'ქ - ' + row.city.v" 
+                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        </div>
+      </td>
+    
+      <td>
+        <div class="flex items-center">
+          <input type="text" [ngModel]="row.country.p + 'ქ - ' + row.country.v" 
+                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        </div>
+      </td>
+    
+      <td>
+        <div class="flex items-center">
+          <input type="text" [ngModel]="row.animals.p + 'ქ - ' + row.animals.v" 
+                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        </div>
+      </td>
+    
+      <td>
+        <div class="flex items-center">
+          <input type="text" [ngModel]="row.plants.p + 'ქ - ' + row.plants.v" 
+                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        </div>
+      </td>
+    
+      <td>
+        <div class="flex items-center">
+          <input type="text" [ngModel]="row.movies.p + 'ქ - ' + row.movies.v" 
+                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        </div>
+      </td>
+    
+      <td>
+        <div class="flex items-center">
+          <input type="text" [ngModel]="row.result" 
+                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        </div>
+      </td>
+    </tr>
       </tbody>
     </table>
-    <button (click)="continueGame()"
-    class="text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-1 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-        გაგრძელება
-    </button>
+
+    <!-- Centered Button -->
+    <div class="flex justify-center mt-4">
+      <button (click)="continueGame()"
+        class="text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-1 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+          გაგრძელება
+      </button>
+    </div>
+
   </div>
+</div>
 }
+
 @else {
   <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
 
@@ -74,20 +139,28 @@
              <th class="px-4 py-2">მცენარე</th>
              <th class="px-4 py-2">ცხოველი</th>
              <th class="px-4 py-2">ფილმი</th>
-             <th class="px-4 py-2">მოქმედება</th>
              <th class="px-4 py-2">ჯამი</th>
-           </tr>
+             <th class="px-4 py-2">მოქმედება</th>
+            </tr>
          </thead>
          <tbody>
    
            <tr *ngFor="let row of rows; let i = index" [ngClass]="{'bg-gradient-to-r from-blue-700 to-blue-900 ': i % 2 === 0, 'bg-gradient-to-r from-blue-650 to-cyan-850': i % 2 !== 0 }">
-             <td><input type="text" [(ngModel)]="row.firstName" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-             <td><input type="text" [(ngModel)]="row.lastName" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-             <td><input type="text" [(ngModel)]="row.city" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-             <td><input type="text" [(ngModel)]="row.country" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-             <td><input type="text" [(ngModel)]="row.animals" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-             <td><input type="text" [(ngModel)]="row.plants" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
-             <td><input type="text" [(ngModel)]="row.movies" [disabled]="!row.enabled" class="text-black px-4 py-2 w-full"></td>
+             <!-- Apply conditional classes for enabled/disabled state -->
+             <td><input type="text" [(ngModel)]="row.firstName" [disabled]="!row.enabled" 
+                [ngClass]="{'text-white bg-blue-500': row.enabled, 'text-black': !row.enabled}" class="px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.lastName" [disabled]="!row.enabled" 
+                [ngClass]="{'text-white bg-blue-500': row.enabled, 'text-black': !row.enabled}" class="px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.city" [disabled]="!row.enabled" 
+                [ngClass]="{'text-white bg-blue-500': row.enabled, 'text-black': !row.enabled}" class="px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.country" [disabled]="!row.enabled" 
+                [ngClass]="{'text-white bg-blue-500': row.enabled, 'text-black': !row.enabled}" class="px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.animals" [disabled]="!row.enabled" 
+                [ngClass]="{'text-white bg-blue-500': row.enabled, 'text-black': !row.enabled}" class="px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.plants" [disabled]="!row.enabled" 
+                [ngClass]="{'text-white bg-blue-500': row.enabled, 'text-black': !row.enabled}" class="px-4 py-2 w-full"></td>
+             <td><input type="text" [(ngModel)]="row.movies" [disabled]="!row.enabled" 
+                [ngClass]="{'text-white bg-blue-500': row.enabled, 'text-black': !row.enabled}" class="px-4 py-2 w-full"></td>
              <td>
                <button *ngIf="i === currentRound" (click)="startStopRow(i)" 
                class="text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-1 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
@@ -105,9 +178,6 @@
      </div>
    </div>
 }
-
- 
-
 
   <div class="chat-toggle" (click)="toggleChat()">
     <fa-icon [icon]="faCommentDots"></fa-icon>
