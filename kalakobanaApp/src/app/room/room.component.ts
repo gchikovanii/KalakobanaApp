@@ -32,11 +32,11 @@ export class RoomComponent implements OnInit {
   roundIsFinished = signal(false);
   // Array to keep track of used letters
   usedLetters: string[] = [];
-
+  gameFinished = signal(false);
   alphabet: string = 'აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭხჯჰ';
   randomLetter: string = '';  // Letter to be displayed
   currentRound: number = 0;
-  totalRounds: number = 12;
+  totalRounds: number = 2;
 
   rows: any[] = [];
   resultRows: any[] = [
@@ -122,16 +122,25 @@ export class RoomComponent implements OnInit {
       this.rows[index].enabled = false;
       this.rows[index].completed = true;
       this.rows[index].started = false;
+  
+      // Mark the round as finished
       this.roundIsFinished.set(true);
-      // Enable the next row
+  
+      // Check if it's the last row/round
       if (index + 1 < this.totalRounds) {
+        // Enable the next row (if it's not the last one)
         this.currentRound++;
+      } else if (index + 1 === this.totalRounds) {
+        // If it's the last round, mark the game as finished
+        this.gameFinished.set(true);
       }
     }
   }
   continueGame(){
     this.roundIsFinished.set(false);
-
+    if(this.currentRound == this.totalRounds){
+      this.gameFinished.set(true);
+    }
   }
   faCommentDots = faCommentDots;
   isChatOpen = false;

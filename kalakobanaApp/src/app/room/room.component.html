@@ -18,7 +18,7 @@
       ოთახიდან გამოსვლა
     </button>
 </nav>
-@if(roundIsFinished() && currentRound > 0){
+@if(roundIsFinished() && currentRound > 0 && currentRound != totalRounds){
   <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
 
   <div class="container mx-auto mt-6 overflow-x-auto">
@@ -120,7 +120,7 @@
 </div>
 }
 
-@else {
+@else if(!gameFinished()){
   <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
 
     <!-- Round Display -->
@@ -178,6 +178,57 @@
      </div>
    </div>
 }
+@else {
+  <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
+
+  <div class="bg-white shadow-md rounded-md p-4 mx-auto max-w-sm mt-16">
+    <h2 class="text-xl font-semibold mb-4">Top Users</h2>
+    <ul>
+        <li class="flex items-center justify-between py-2 border-b border-gray-300">
+            <div class="flex items-center">
+                <span class="text-lg font-semibold mr-4">1</span>
+                <img src="https://via.placeholder.com/48" alt="User Avatar" class="w-8 h-8 rounded-full mr-4">
+                <span class="text-gray-800 font-semibold">John Doe</span>
+            </div>
+            <span class="text-green-500 font-semibold">1000 Points</span>
+        </li>
+        <li class="flex items-center justify-between py-2 border-b border-gray-300">
+            <div class="flex items-center">
+                <span class="text-lg font-semibold mr-4">2</span>
+                <img src="https://via.placeholder.com/48" alt="User Avatar" class="w-8 h-8 rounded-full mr-4">
+                <span class="text-gray-800 font-semibold">Jane Doe</span>
+            </div>
+            <span class="text-green-500 font-semibold">950 Points</span>
+        </li>
+        <li class="flex items-center justify-between py-2 border-b border-gray-300">
+            <div class="flex items-center">
+                <span class="text-lg font-semibold mr-4">3</span>
+                <img src="https://via.placeholder.com/48" alt="User Avatar" class="w-8 h-8 rounded-full mr-4">
+                <span class="text-gray-800 font-semibold">Bob Smith</span>
+            </div>
+            <span class="text-green-500 font-semibold">850 Points</span>
+        </li>
+        <li class="flex items-center justify-between py-2 border-b border-gray-300">
+            <div class="flex items-center">
+                <span class="text-lg font-semibold mr-4">4</span>
+                <img src="https://via.placeholder.com/48" alt="User Avatar" class="w-8 h-8 rounded-full mr-4">
+                <span class="text-gray-800 font-semibold">Alice Smith</span>
+            </div>
+            <span class="text-green-500 font-semibold">800 Points</span>
+        </li>
+        <li class="flex items-center justify-between py-2">
+            <div class="flex items-center">
+                <span class="text-lg font-semibold mr-4">5</span>
+                <img src="https://via.placeholder.com/48" alt="User Avatar" class="w-8 h-8 rounded-full mr-4">
+                <span class="text-gray-800 font-semibold">Joe Johnson</span>
+            </div>
+            <span class="text-green-500 font-semibold">750 Points</span>
+        </li>
+    </ul>
+  </div>
+</div>
+}
+
 
   <div class="chat-toggle" (click)="toggleChat()">
     <fa-icon [icon]="faCommentDots"></fa-icon>
