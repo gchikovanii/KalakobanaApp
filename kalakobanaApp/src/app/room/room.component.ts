@@ -37,7 +37,7 @@ export class RoomComponent implements OnInit {
   randomLetter: string = '';  // Letter to be displayed
   currentRound: number = 0;
   totalRounds: number = 2;
-
+  displayLetter = signal(true);
   rows: any[] = [];
   resultRows: any[] = [
     {
@@ -132,6 +132,7 @@ export class RoomComponent implements OnInit {
       } else if (index + 1 === this.totalRounds) {
         // If it's the last round, mark the game as finished
         this.gameFinished.set(true);
+        this.displayLetter.set(false);
       }
     }
   }
