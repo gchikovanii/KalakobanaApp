@@ -46,6 +46,7 @@ export class GameHubComponent {
     this.isFormOpen = true;
     this.form.reset();
     this.initializeForm();
+    this.onGameTypeChange();
   }
 
   closeForm() {
