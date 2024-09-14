@@ -18,12 +18,6 @@ export class GameHubComponent {
   ];
 
   selectedRoom: any = null;
-  // form = new FormGroup({
-  //   name: new FormControl('', {validators: [Validators.required]}),
-  //   password: new FormControl(''),
-  //   maxcounts: new FormControl('',{validators:[Validators.max(16)]}),
-  //   gameType: new FormControl('კლასიკური',[Validators.required])
-  // });
   form: FormGroup;
 
   selectRoom(room: any) {
@@ -32,13 +26,12 @@ export class GameHubComponent {
    submit() {
     if (this.form.valid) {
       const formData = this.form.value;
-      console.log(formData); // Handle the form submission here
+      console.log(formData); 
     }
   }
   onGameTypeChange() {
     const gameType = this.form.get('gameType')?.value;
     this.showConfigurableOptions = gameType === 'კონფიგურირებადი';
-
     // Reset the rounds input if not "კონფიგურირებადი"
     if (!this.showConfigurableOptions) {
       this.form.get('rounds')?.reset();
@@ -62,7 +55,7 @@ export class GameHubComponent {
     this.form = new FormGroup({
       name: new FormControl('', { validators: [Validators.required] }),
       password: new FormControl(''),
-      maxcounts: new FormControl('', { validators: [Validators.max(16)] }),
+      maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(16)] }),
       gameType: new FormControl('კლასიკური', [Validators.required]),
       rounds: new FormControl('') 
     });
