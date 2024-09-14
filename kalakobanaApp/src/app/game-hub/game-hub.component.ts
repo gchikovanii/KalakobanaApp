@@ -1,25 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NavbarComponent } from "../shared/navbar/navbar.component";
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-game-hub',
   standalone: true,
-  imports: [NavbarComponent,CommonModule, RouterModule,ReactiveFormsModule],
+  imports: [NavbarComponent,CommonModule, RouterModule,ReactiveFormsModule,FormsModule ],
   templateUrl: './game-hub.component.html',
   styleUrl: './game-hub.component.css'
 })
 export class GameHubComponent {
   rooms = [
     { id: 1,name: 'სატესტო ოთახი 1', players: 1, maxPlayers: 10, isPrivate: false, mode: 'კლასიკური',gameStatus: false, },
-    {id: 2, name: 'სატესტო ოთახი 2', players: 2, maxPlayers: 5, isPrivate: true, mode: 'გადარჩენა',gameStatus: true,},
+    {id: 2, name: 'სატესტო ოთახი 2', players: 2, maxPlayers: 5, isPrivate: true, mode: 'გადარჩენა',gameStatus: false,},
   ];
 
   selectedRoom: any = null;
   form!: FormGroup;
-
+  router = inject(Router);
   selectRoom(room: any) {
     this.selectedRoom = room;
   }
@@ -102,5 +102,35 @@ checkIndividual() {
   const { firstname, lastname, city, country, animal, plant,movie,river } = this.form.value;
   this.allSelected = firstname && lastname && city  &&country &&animal &&plant &&movie &&river;
 }
+  isRedirectModalOpen = false;
+  enteredPassword: string = '';
+  isPasswordIncorrect = false;
 
+  openRedirectModal(room: any) {
+    this.selectedRoom = room;
+    this.isRedirectModalOpen = true;
+    this.enteredPassword = '';
+    this.isPasswordIncorrect = false;
+  }
+
+  closeRedirectModal() {
+    this.isRedirectModalOpen = false;
+    this.selectedRoom = null;
+  }
+
+  confirmRedirect() {
+    if (this.selectedRoom.isPrivate && !this.isPasswordValid()) {
+      this.isPasswordIncorrect = true;
+      this.router.navigate(['/room']);
+      return;
+    }
+    // Perform the redirect logic here
+    this.router.navigate(['/room']);
+    this.closeRedirectModal();
+  }
+
+  isPasswordValid() {
+    // Add the logic to validate the password here
+    return this.enteredPassword === 'test'; 
+  }
 }
