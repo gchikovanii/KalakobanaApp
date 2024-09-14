@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from "../shared/navbar/navbar.component";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-game-hub',
   standalone: true,
-  imports: [NavbarComponent,CommonModule, RouterModule],
+  imports: [NavbarComponent,CommonModule, RouterModule,ReactiveFormsModule],
   templateUrl: './game-hub.component.html',
   styleUrl: './game-hub.component.css'
 })
@@ -17,11 +18,32 @@ export class GameHubComponent {
   ];
 
   selectedRoom: any = null;
+  // form = new FormGroup({
+  //   name: new FormControl('', {validators: [Validators.required]}),
+  //   password: new FormControl(''),
+  //   maxcounts: new FormControl('',{validators:[Validators.max(16)]}),
+  //   gameType: new FormControl('კლასიკური',[Validators.required])
+  // });
+  form: FormGroup;
 
   selectRoom(room: any) {
     this.selectedRoom = room;
   }
+   submit() {
+    if (this.form.valid) {
+      const formData = this.form.value;
+      console.log(formData); // Handle the form submission here
+    }
+  }
+  onGameTypeChange() {
+    const gameType = this.form.get('gameType')?.value;
+    this.showConfigurableOptions = gameType === 'კონფიგურირებადი';
 
+    // Reset the rounds input if not "კონფიგურირებადი"
+    if (!this.showConfigurableOptions) {
+      this.form.get('rounds')?.reset();
+    }
+  }
   refresh(){
     //Refetch Data
   }
@@ -34,4 +56,17 @@ export class GameHubComponent {
   closeForm() {
     this.isFormOpen = false;
   }
+  showConfigurableOptions = false;
+
+  constructor() {
+    this.form = new FormGroup({
+      name: new FormControl('', { validators: [Validators.required] }),
+      password: new FormControl(''),
+      maxcounts: new FormControl('', { validators: [Validators.max(16)] }),
+      gameType: new FormControl('კლასიკური', [Validators.required]),
+      rounds: new FormControl('') 
+    });
+  }
+
+  
 }
