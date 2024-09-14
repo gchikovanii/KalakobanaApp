@@ -142,9 +142,12 @@
               class="remove-arrow w-full px-4 py-2 border rounded-lg focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="მოთამაშეების რაოდენობა"
             />
-            <p *ngIf="form.get('maxcounts')?.errors?.['max']" class="text-red-500">
-              მაქსიმალური რაოდენობა არის 16
-            </p>
+            @if(form.get('maxcounts')?.errors?.['max']){
+              <p  class="text-red-500">
+                მაქსიმალური რაოდენობა არის 16
+              </p>
+            }
+            
           </div>
         
           <div class="mb-4">
@@ -176,59 +179,62 @@
               </button>
             
               <!-- Dropdown Menu -->
-              <div *ngIf="showDropdown" class="absolute z-10 w-full bg-white dark:bg-gray-700 shadow-lg mt-1 rounded-lg overflow-y-auto max-h-60">
-                <div class="p-4">
-                  <!-- Select All Checkbox -->
-                  <label class="flex items-center mb-4">
-                    <input type="checkbox" [checked]="allSelected" (change)="toggleSelectAll()" class="form-checkbox h-5 w-5 text-indigo-600" />
-                    <span class="ml-2 text-sm dark:text-gray-300">ყველა</span>
-                  </label>
-                  <hr class="mb-4" />
-                  
-                  <!-- Grid layout for checkboxes -->
-                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"> <!-- Responsive grid layout -->
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" formControlName="firstname" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
-                      <span class="text-sm dark:text-gray-300">სახელი</span>
+               @if(showDropdown){
+                <div  class="absolute z-10 w-full bg-white dark:bg-gray-700 shadow-lg mt-1 rounded-lg overflow-y-auto max-h-60">
+                  <div class="p-4">
+                    <!-- Select All Checkbox -->
+                    <label class="flex items-center mb-4">
+                      <input type="checkbox" [checked]="allSelected" (change)="toggleSelectAll()" class="form-checkbox h-5 w-5 text-indigo-600" />
+                      <span class="ml-2 text-sm dark:text-gray-300">ყველა</span>
                     </label>
-              
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" formControlName="lastname" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
-                      <span class="text-sm dark:text-gray-300">გვარი</span>
-                    </label>
-              
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" formControlName="city" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
-                      <span class="text-sm dark:text-gray-300">ქალაქი</span>
-                    </label>
-              
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" formControlName="country" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
-                      <span class="text-sm dark:text-gray-300">ქვეყანა</span>
-                    </label>
-              
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" formControlName="animal" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
-                      <span class="text-sm dark:text-gray-300">ცხოველი</span>
-                    </label>
-              
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" formControlName="plant" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
-                      <span class="text-sm dark:text-gray-300">მცენარე</span>
-                    </label>
-              
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" formControlName="movie" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
-                      <span class="text-sm dark:text-gray-300">ფილმი</span>
-                    </label>
-              
-                    <label class="flex items-center space-x-2">
-                      <input type="checkbox" formControlName="river" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
-                      <span class="text-sm dark:text-gray-300">მდინარე</span>
-                    </label>
+                    <hr class="mb-4" />
+                    
+                    <!-- Grid layout for checkboxes -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"> <!-- Responsive grid layout -->
+                      <label class="flex items-center space-x-2">
+                        <input type="checkbox" formControlName="firstname" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
+                        <span class="text-sm dark:text-gray-300">სახელი</span>
+                      </label>
+                
+                      <label class="flex items-center space-x-2">
+                        <input type="checkbox" formControlName="lastname" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
+                        <span class="text-sm dark:text-gray-300">გვარი</span>
+                      </label>
+                
+                      <label class="flex items-center space-x-2">
+                        <input type="checkbox" formControlName="city" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
+                        <span class="text-sm dark:text-gray-300">ქალაქი</span>
+                      </label>
+                
+                      <label class="flex items-center space-x-2">
+                        <input type="checkbox" formControlName="country" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
+                        <span class="text-sm dark:text-gray-300">ქვეყანა</span>
+                      </label>
+                
+                      <label class="flex items-center space-x-2">
+                        <input type="checkbox" formControlName="animal" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
+                        <span class="text-sm dark:text-gray-300">ცხოველი</span>
+                      </label>
+                
+                      <label class="flex items-center space-x-2">
+                        <input type="checkbox" formControlName="plant" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
+                        <span class="text-sm dark:text-gray-300">მცენარე</span>
+                      </label>
+                
+                      <label class="flex items-center space-x-2">
+                        <input type="checkbox" formControlName="movie" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
+                        <span class="text-sm dark:text-gray-300">ფილმი</span>
+                      </label>
+                
+                      <label class="flex items-center space-x-2">
+                        <input type="checkbox" formControlName="river" (change)="checkIndividual()" class="form-checkbox h-5 w-5 text-indigo-600" />
+                        <span class="text-sm dark:text-gray-300">მდინარე</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
+               }
+             
               
               
             </div>
@@ -240,13 +246,13 @@
                 class="remove-arrow w-full px-4 py-2 border rounded-lg focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 placeholder="რაუნდების რაოდენობა"
               />
-              <p *ngIf="form.get('rounds')?.errors?.['max']" class="text-red-500">
-                რაუნდების მაქსიმალური რაოდენობა არის 33
-              </p>
+              @if(form.get('rounds')?.errors?.['max']){
+                <p class="text-red-500">
+                  რაუნდების მაქსიმალური რაოდენობა არის 33
+                </p>
+              }
             </div>
 }
-         
-        
           <div class="flex justify-end space-x-2">
             <button (click)="closeForm()" type="button" class="px-4 py-2 bg-gray-500 hover:bg-gray-400 text-white rounded-lg">გაუქმება</button>
             <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg" [disabled]="form.invalid">დამატება</button>
