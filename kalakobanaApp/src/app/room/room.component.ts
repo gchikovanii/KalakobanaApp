@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCommentDots, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCheckDouble, faCommentDots, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';  
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
-
+import { faPersonBooth } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-room',
   standalone: true,
@@ -30,6 +30,7 @@ export class RoomComponent implements OnInit {
   faSignOutAlt = faSignOutAlt;
   router = inject(Router);
   roundIsFinished = signal(false);
+  faThumbs = faCheckDouble;
   // Array to keep track of used letters
   usedLetters: string[] = [];
   gameFinished = signal(false);
@@ -42,7 +43,7 @@ export class RoomComponent implements OnInit {
   resultRows: any[] = [
     {
       userName: 'ჩიქო',
-      firstName: { v: 'მაკო', p: 10 },  
+      firstName: { v: 'მარია', p: 10 },  
       lastName: { v: 'მაკაშვილი', p: 10 },     
       city: { v: 'მაინცი', p: 10 },     
       country: { v: 'მონღოლეთი', p: 5 },      
@@ -64,12 +65,12 @@ export class RoomComponent implements OnInit {
     },
     {
       userName: 'მაჭა',
-      firstName: { v: 'მაკაკო', p: 10 },  
-      lastName: { v: 'მაკარიძე', p: 10 }, 
+      firstName: { v: 'მაკაკო', p: 0 },  
+      lastName: { v: 'მაკარიძე', p: 0 }, 
       city: { v: '', p: 0 },     
-      country: { v: 'მონღოლეთი', p: 5 }, 
-      animals: { v: 'მაიმუნი', p: 5 }, 
-      plants: { v: 'მარწყვი', p: 10 }, 
+      country: { v: 'მონღოლეთი', p: 0 }, 
+      animals: { v: 'მაიმუნი', p: 0 }, 
+      plants: { v: 'მარწყვი', p: 0 }, 
       movies: { v: '', p: 0 },
       result: '40'
     }

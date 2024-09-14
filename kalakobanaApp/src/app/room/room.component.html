@@ -50,53 +50,138 @@
                  readonly class="text-white bg-blue-500 px-4 py-2 w-full">
         </div>
       </td>
+      <td>
+        <div class="flex items-center relative">
+          @if (row.firstName.p === 0) {
+            <input type="text" 
+                   [ngModel]="row.firstName.p + ' ქ '" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+                   <button class="absolute right-2 bg-white text-blue-500 p-1 rounded-full">
+                    <fa-icon [icon]="faThumbs"></fa-icon>
+                  </button>
+          } @else {
+            <input type="text" 
+                   [ngModel]="row.firstName.p + 'ქ - ' + row.firstName.v" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+          }
+        </div>
+      </td>
     
       <td>
-        <div class="flex items-center">
-          <input type="text" [ngModel]="row.firstName.p + 'ქ - ' + row.firstName.v" 
-                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        <div class="flex items-center relative">
+          @if (row.lastName.p === 0) {
+            <input type="text" 
+                   [ngModel]="row.lastName.p + ' ქ '" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+                   <button class="absolute right-2 bg-white text-blue-500 p-1 rounded-full">
+                    <fa-icon [icon]="faThumbs"></fa-icon>
+                  </button>
+          } @else {
+            <input type="text" 
+                   [ngModel]="row.lastName.p + 'ქ - ' + row.lastName.v" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+          }
         </div>
       </td>
     
       <td>
         <div class="flex items-center">
-          <input type="text" [ngModel]="row.lastName.p + 'ქ - ' + row.lastName.v" 
-                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+        @if (row.city.p === 0) {
+          <input type="text" 
+                 [ngModel]="row.city.p + ' ქ '" 
+                 readonly 
+                 class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+                 <button class="absolute right-2 bg-white text-blue-500 p-1 rounded-full">
+                  <fa-icon [icon]="faThumbs"></fa-icon>
+                </button>
+        } @else {
+          <input type="text" 
+                 [ngModel]="row.city.p + 'ქ - ' + row.city.v" 
+                 readonly 
+                 class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+        }
+      </div>
+      </td>
+    
+      <td>
+        <div class="flex items-center relative">
+          @if (row.country.p === 0) {
+            <input type="text" 
+                   [ngModel]="row.country.p + ' ქ '" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+                   <button class="absolute right-2 bg-white text-blue-500 p-1 rounded-full">
+                    <fa-icon [icon]="faThumbs"></fa-icon>
+                  </button>
+          } @else {
+            <input type="text" 
+                   [ngModel]="row.country.p + 'ქ - ' + row.country.v" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+          }
+        </div>
+
+      </td>
+    
+      <td>
+        <div class="flex items-center relative">
+          @if (row.animals.p === 0) {
+            <input type="text" 
+                   [ngModel]="row.animals.p + ' ქ '" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+                   <button class="absolute right-2 bg-white text-blue-500 p-1 rounded-full">
+                    <fa-icon [icon]="faThumbs"></fa-icon>
+                  </button>
+          } @else {
+            <input type="text" 
+                   [ngModel]="row.animals.p + 'ქ - ' + row.animals.v" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+          }
         </div>
       </td>
     
       <td>
         <div class="flex items-center">
-          <input type="text" [ngModel]="row.city.p + 'ქ - ' + row.city.v" 
-                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+          @if (row.plants.p === 0) {
+            <input type="text" 
+                   [ngModel]="row.plants.p + ' ქ '" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+                   <button class="absolute right-2 bg-white text-blue-500 p-1 rounded-full">
+                    <fa-icon [icon]="faThumbs"></fa-icon>
+                  </button>
+          } @else {
+            <input type="text" 
+                   [ngModel]="row.plants.p + 'ქ - ' + row.plants.v" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+          }
         </div>
+        
       </td>
     
       <td>
         <div class="flex items-center">
-          <input type="text" [ngModel]="row.country.p + 'ქ - ' + row.country.v" 
-                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
-        </div>
-      </td>
-    
-      <td>
-        <div class="flex items-center">
-          <input type="text" [ngModel]="row.animals.p + 'ქ - ' + row.animals.v" 
-                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
-        </div>
-      </td>
-    
-      <td>
-        <div class="flex items-center">
-          <input type="text" [ngModel]="row.plants.p + 'ქ - ' + row.plants.v" 
-                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
-        </div>
-      </td>
-    
-      <td>
-        <div class="flex items-center">
-          <input type="text" [ngModel]="row.movies.p + 'ქ - ' + row.movies.v" 
-                 readonly class="text-white bg-blue-500 px-4 py-2 w-full">
+          @if (row.movies.p === 0) {
+            <input type="text" 
+                   [ngModel]="row.movies.p + ' ქ '" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+                   <button class="absolute right-2 bg-white text-blue-500 p-1 rounded-full">
+                    <fa-icon [icon]="faThumbs"></fa-icon>
+                  </button>
+          } @else {
+            <input type="text" 
+                   [ngModel]="row.movies.p + 'ქ - ' + row.movies.v" 
+                   readonly 
+                   class="text-white bg-blue-500 px-4 py-2 w-full pr-10">
+          }
         </div>
       </td>
     
@@ -267,8 +352,8 @@
     </div>
     
     <div class="chat-input">
-      <input [(ngModel)]="newMessage" type="text" placeholder="Type a message..." class="message-input">
-      <button (click)="sendMessage()" class="send-btn">Send</button>
+      <input [(ngModel)]="newMessage" type="text" placeholder="შეიყვანეთ მესიჯი..." class="message-input">
+      <button (click)="sendMessage()" class="send-btn">გაგზავნა</button>
     </div>
   </div>
 

@@ -186,4 +186,13 @@
       opacity: 1;
     }
   }
-  
+  td {
+    position: relative;
+}
+
+td .absolute {
+    position: absolute;
+    right: 8px; /* Adjust this value if necessary */
+    top: 50%;
+    transform: translateY(-50%);
+}
