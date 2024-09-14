@@ -47,3 +47,11 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.dropdown-menu {
+  overflow-y: auto;
+  max-height: 300px; /* Adjust this value as necessary */
+}
+.dropdown-menu {
+  z-index: 9999;
+}

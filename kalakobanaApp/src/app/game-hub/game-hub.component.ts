@@ -47,6 +47,7 @@ export class GameHubComponent {
     this.form.reset();
     this.initializeForm();
     this.onGameTypeChange();
+    this.allSelected = false;
   }
 
   closeForm() {
@@ -64,7 +65,7 @@ initializeForm(){
     password: new FormControl(''),
     maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(16)] }),
     gameType: new FormControl('კლასიკური', [Validators.required]),
-    rounds: new FormControl('') ,
+    rounds: new FormControl('',{ validators: [Validators.required, Validators.max(33)] }) ,
     firstname: new FormControl(false), // Checkbox for firstname
     lastname: new FormControl(false),
     city: new FormControl(false),
