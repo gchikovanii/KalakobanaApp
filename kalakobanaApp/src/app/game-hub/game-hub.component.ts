@@ -18,7 +18,7 @@ export class GameHubComponent {
   ];
 
   selectedRoom: any = null;
-  form: FormGroup;
+  form!: FormGroup;
 
   selectRoom(room: any) {
     this.selectedRoom = room;
@@ -44,22 +44,27 @@ export class GameHubComponent {
 
   openForm() {
     this.isFormOpen = true;
+    this.form.reset();
+    this.initializeForm();
   }
 
   closeForm() {
     this.isFormOpen = false;
+    this.form.reset();
   }
   showConfigurableOptions = false;
-
+  
   constructor() {
-    this.form = new FormGroup({
-      name: new FormControl('', { validators: [Validators.required] }),
-      password: new FormControl(''),
-      maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(16)] }),
-      gameType: new FormControl('კლასიკური', [Validators.required]),
-      rounds: new FormControl('') 
-    });
+   this.initializeForm();
   }
-
+initializeForm(){
+  this.form = new FormGroup({
+    name: new FormControl('', { validators: [Validators.required] }),
+    password: new FormControl(''),
+    maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(16)] }),
+    gameType: new FormControl('კლასიკური', [Validators.required]),
+    rounds: new FormControl('') 
+  });
+}
   
 }
