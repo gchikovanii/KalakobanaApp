@@ -64,8 +64,42 @@ initializeForm(){
     password: new FormControl(''),
     maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(16)] }),
     gameType: new FormControl('კლასიკური', [Validators.required]),
-    rounds: new FormControl('') 
+    rounds: new FormControl('') ,
+    firstname: new FormControl(false), // Checkbox for firstname
+    lastname: new FormControl(false),
+    city: new FormControl(false),
+    country: new FormControl(false),
+    animal: new FormControl(false),
+    plant: new FormControl(false),
+    movie: new FormControl(false),
+    river: new FormControl(false)
   });
 }
-  
+
+showDropdown = false; // Controls the visibility of the dropdown
+allSelected = false; 
+toggleSelectAll() {
+  const allChecked = !this.allSelected;
+  this.allSelected = allChecked;
+  this.form.patchValue({
+    firstname: allChecked,
+    lastname: allChecked,
+    city: allChecked,
+    country: allChecked,
+    animal:allChecked,
+    plant:allChecked,
+    movie:allChecked,
+    river:allChecked
+  });
+}
+toggleDropdown() {
+  this.showDropdown = !this.showDropdown;
+}
+
+// Check if individual checkboxes are selected
+checkIndividual() {
+  const { firstname, lastname, city, country, animal, plant,movie,river } = this.form.value;
+  this.allSelected = firstname && lastname && city  &&country &&animal &&plant &&movie &&river;
+}
+
 }
