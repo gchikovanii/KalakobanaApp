@@ -41,37 +41,37 @@ export class RoomComponent implements OnInit {
   rows: any[] = [];
   resultRows: any[] = [
     {
-      userName: 'user1',
-      firstName: { v: 'John', p: 10 },  
-      lastName: { v: 'Doe', p: 15 },     
-      city: { v: 'New York', p: 5 },     
-      country: { v: 'USA', p: 10 },      
-      animals: { v: 'Dogs, Cats', p: 15 }, 
-      plants: { v: 'Cactus, Fern', p: 5 },
-      movies: { v: 'Inception, Matrix', p: 10 }, 
-      result: '150'
+      userName: 'ჩიქო',
+      firstName: { v: 'მაკო', p: 10 },  
+      lastName: { v: 'მაკაშვილი', p: 10 },     
+      city: { v: 'მაინცი', p: 10 },     
+      country: { v: 'მონღოლეთი', p: 5 },      
+      animals: { v: 'მაიმუნი', p: 5 }, 
+      plants: { v: 'მანგო', p: 10 },
+      movies: { v: 'მატრიცა', p: 15 }, 
+      result: '65'
     },
     {
-      userName: 'user2',
-      firstName: { v: 'Jane', p: 5 },  
-      lastName: { v: 'Smith', p: 10 }, 
-      city: { v: 'London', p: 15 },    
-      country: { v: 'UK', p: 5 },      
-      animals: { v: 'Rabbits, Horses', p: 10 }, 
-      plants: { v: 'Rose, Tulip', p: 5 }, 
-      movies: { v: 'Titanic, Avatar', p: 15 },
-      result: '30'
-    },
-    {
-      userName: 'user3',
-      firstName: { v: 'Alex', p: 10 },  
-      lastName: { v: 'Johnson', p: 15 }, 
-      city: { v: 'Sydney', p: 5 },     
-      country: { v: 'Australia', p: 10 }, 
-      animals: { v: 'Kangaroo, Koala', p: 15 }, 
-      plants: { v: 'Eucalyptus, Acacia', p: 10 }, 
-      movies: { v: 'Mad Max, Crocodile Dundee', p: 15 },
+      userName: 'ჯოლიხი',
+      firstName: { v: 'მუკაკო', p: 5 },  
+      lastName: { v: 'მუკალტინიშვილი', p: 10 }, 
+      city: { v: 'მემინგემი', p: 10 },    
+      country: { v: 'მონღოლეთი', p: 5 },      
+      animals: { v: 'მაიმუნი', p: 5 }, 
+      plants: { v: 'მარაკუია', p: 10 }, 
+      movies: { v: '', p: 0 },
       result: '45'
+    },
+    {
+      userName: 'მაჭა',
+      firstName: { v: 'მაკაკო', p: 10 },  
+      lastName: { v: 'მაკარიძე', p: 10 }, 
+      city: { v: '', p: 0 },     
+      country: { v: 'მონღოლეთი', p: 5 }, 
+      animals: { v: 'მაიმუნი', p: 5 }, 
+      plants: { v: 'მარწყვი', p: 10 }, 
+      movies: { v: '', p: 0 },
+      result: '40'
     }
   ];
   
