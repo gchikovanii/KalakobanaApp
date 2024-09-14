@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCheckDouble, faCommentDots, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCheckDouble, faCommentDots, faPaperPlane, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';  
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { faPersonBooth } from '@fortawesome/free-solid-svg-icons';
@@ -28,6 +28,7 @@ import { faPersonBooth } from '@fortawesome/free-solid-svg-icons';
 })
 export class RoomComponent implements OnInit {
   faSignOutAlt = faSignOutAlt;
+  faPaperPlane = faPaperPlane;
   router = inject(Router);
   roundIsFinished = signal(false);
   faThumbs = faCheckDouble;

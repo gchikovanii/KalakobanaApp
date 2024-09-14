@@ -353,7 +353,9 @@
     
     <div class="chat-input">
       <input [(ngModel)]="newMessage" type="text" placeholder="შეიყვანეთ მესიჯი..." class="message-input">
-      <button (click)="sendMessage()" class="send-btn">გაგზავნა</button>
+      <button (click)="sendMessage()" class="send-btn">
+        <fa-icon  [icon]="faPaperPlane"></fa-icon>
+      </button>
     </div>
   </div>
 
