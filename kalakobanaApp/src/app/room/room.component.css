@@ -53,8 +53,8 @@
   /* Chat Header */
   .chat-header {
     display: flex;
-    justify-content: space-between; /* Aligns X and Room Chat horizontally */
-    align-items: center; /* Vertically centers the content */
+    justify-content: space-between; 
+    align-items: center; 
     background-color: #4c51bf;
     color: white;
     padding: 10px;
@@ -64,7 +64,7 @@
   
   .chat-header h3 {
     margin: 0;
-    font-size: 1.2em; /* Adjust the font size for smaller text */
+    font-size: 1.2em;
   }
   
   /* Close Button (X) */
@@ -78,8 +78,8 @@
   }
   
   .close-btn:hover {
-    color: #00bcd4; /* Cyan color on hover */
-    transform: scale(1.1); /* Slightly enlarges the X when hovered */
+    color: #00bcd4;
+    transform: scale(1.1); 
   }
   
   /* Chat Content */
@@ -169,7 +169,6 @@
       opacity: 1;
     }
   }
-  
   .animate-slideInUp {
     animation: slideInUp 0.5s ease-out;
   }
@@ -192,7 +191,7 @@
 
 td .absolute {
     position: absolute;
-    right: 8px; /* Adjust this value if necessary */
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
 }
