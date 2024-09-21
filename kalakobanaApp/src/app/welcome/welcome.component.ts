@@ -19,4 +19,8 @@ export class WelcomeComponent {
   toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
   }
+  login(){
+  }
+  register(){
+  }
 }
