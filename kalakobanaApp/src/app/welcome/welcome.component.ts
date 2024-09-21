@@ -35,6 +35,6 @@ export class WelcomeComponent implements OnInit{
     
   }
   register(){
-    this.authService.logout();
+    this.authService.redirectToRegistration();
   }
 }

@@ -45,8 +45,9 @@ export class AuthService {
     });
   }
 
-  // Handle callback after logout
-  // handleLogoutCallback(): Promise<void> {
-  //   return this.userManager.signoutRedirectCallback();
-  // }
+  redirectToRegistration(): void {
+    const urlCont = '?returnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fclient_id%3DkalakobanaBFF%26redirect_uri%3Dhttps%253A%252F%252Flocalhost%253A7250%252Fsignin-oidc%26response_type%3Dcode%26scope%3Dopenid%2520profile%2520kalakobanaapi.read%2520kalakobanaapi.write%2520roles%2520subscription%26state%3D8d7e6c4d562943bb8cd084205e95e293%26code_challenge%3DEDMVD43cTLPjZKa4E8q974sfUomkNhPjwXMoMYuBoOw%26code_challenge_method%3DS256%26response_mode%3Dquery';
+    const registrationUrl = 'https://localhost:5001/User/Registration' + urlCont;
+    window.location.href = registrationUrl; 
+  }
 }
