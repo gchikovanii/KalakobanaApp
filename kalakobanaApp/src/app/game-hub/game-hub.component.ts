@@ -17,10 +17,7 @@ export class GameHubComponent implements OnInit{
 
   http = inject(HttpClient);
   ngOnInit(): void {
-    this.http.get('https://localhost:7250/auth/user-info').subscribe((claims: any) => {
-      this.userClaims = claims;
-      console.log('User Claims:', this.userClaims); 
-    });
+   
   }
 
 
