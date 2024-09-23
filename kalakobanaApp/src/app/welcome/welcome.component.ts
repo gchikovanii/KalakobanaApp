@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {  faBars, faSignInAlt, faTimes, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-welcome',
@@ -11,30 +10,24 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css'
 })
-export class WelcomeComponent implements OnInit{
-  ngOnInit(): void {
-    this.authService.handleLoginCallback().then(() => {
-      console.log('Login successful');
-      this.router.navigate(['/game-hub']);
-    }).catch(err => {
-      console.error('Error during login callback', err);
-    });
-  }
+export class WelcomeComponent {
+ 
   faBar = faBars;
   faUserPlus = faUserPlus;
   faSignInAlt = faSignInAlt;
   navbarOpen = false;
   faTimes = faTimes;
-  authService = inject(AuthService);
   router = inject(Router);
   toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
   }
-  login(){
-    this.authService.login();
-    
-  }
+  login() {
+    const returnUrl = encodeURIComponent('https://localhost:4200/game-hub'); 
+    window.location.href = `https://localhost:7250/api/auth/login?returnUrl=${returnUrl}`;
+}
+
   register(){
-    this.authService.redirectToRegistration();
+    const returnUrl = encodeURIComponent('https://localhost:4200/singout'); 
+    window.location.href = `https://localhost:7250/api/auth/register?returnUrl=${returnUrl}`;
   }
 }

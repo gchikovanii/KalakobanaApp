@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavbarComponent } from "../shared/navbar/navbar.component";
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-game-hub',
@@ -11,7 +12,18 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
   templateUrl: './game-hub.component.html',
   styleUrl: './game-hub.component.css'
 })
-export class GameHubComponent {
+export class GameHubComponent implements OnInit{
+  userClaims: any;
+
+  http = inject(HttpClient);
+  ngOnInit(): void {
+    this.http.get('https://localhost:7250/auth/user-info').subscribe((claims: any) => {
+      this.userClaims = claims;
+      console.log('User Claims:', this.userClaims); 
+    });
+  }
+
+
   rooms = [
     { id: 1,name: 'სატესტო ოთახი 1', players: 1, maxPlayers: 10, isPrivate: false, mode: 'კლასიკური',gameStatus: false, },
     {id: 2, name: 'სატესტო ოთახი 2', players: 2, maxPlayers: 5, isPrivate: true, mode: 'გადარჩენა',gameStatus: false,},
@@ -59,6 +71,10 @@ export class GameHubComponent {
   constructor() {
    this.initializeForm();
   }
+ 
+
+
+
 initializeForm(){
   this.form = new FormGroup({
     name: new FormControl('', { validators: [Validators.required] }),
