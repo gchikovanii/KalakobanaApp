@@ -24,9 +24,10 @@
         </li>
         <li class="flex items-center gap-2 text-white hover:text-gray-300 transition px-2">
           <fa-icon [icon]="faSignOutAlt"></fa-icon>
-          <form (ngSubmit)="logOut()" class="flex items-center">
+          <!-- <form (ngSubmit)="logOut()" class="flex items-center">
             <button type="submit" class="text-sm">გამოსვლა</button>
-          </form>
+          </form> -->
+          <button class="text-sm" (click)="logOut()">გამოსვლა</button>
         </li>
       </ul>
     </div>
