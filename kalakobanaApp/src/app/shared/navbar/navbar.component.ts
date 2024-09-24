@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {  faCaretDown, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -15,21 +15,18 @@ import { CustomUserProfile } from '../../Models/userprofile';
 })
 export class NavbarComponent implements OnInit{
   givenName: string | null = null;
-  isLoggedIn = false;
+  isLoggedIn = signal(false);
   authService = inject(AuthService);
   router = inject(Router);
-
   faSignOutAlt = faSignOutAlt;
   faTachometerAlt = faUser;
   faCaretDown = faCaretDown;
-
   isNavbarOpen = false;
-
   ngOnInit(): void {
     // First check login status
     this.authService.checkLoginStatus().subscribe({
       next: (status: boolean) => {
-        this.isLoggedIn = status;
+        this.isLoggedIn.set(status);
         if (status) {
           // If logged in, fetch the user profile
           this.authService.getUserProfile().subscribe({
