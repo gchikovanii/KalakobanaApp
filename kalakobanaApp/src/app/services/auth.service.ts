@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { CustomUserProfile } from '../Models/userprofile';
 import { environment } from '../../environments/environment';
+import { UserDto } from '../Models/UserDto';
+import { UpdateProfileDto } from '../Models/updateProfileDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,16 @@ export class AuthService {
       })
     );
   }
+
+  getUserProfileForPage() {
+    return this.httpClient.get<UserDto>(`${this.apiUrl}/bff/user/profile`, { withCredentials: true });
+  }
+  updateUserProfile(profileDto: UpdateProfileDto) {
+    return this.httpClient.post(`${this.apiUrl}/bff/user/profile/update`, profileDto, { withCredentials: true });
+  }
+    
+
+
 
   // Getter for login status as Observable
   isLoggedIn(): Observable<boolean> {

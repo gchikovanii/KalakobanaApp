@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from "../shared/navbar/navbar.component";
 
@@ -12,19 +12,19 @@ import { NavbarComponent } from "../shared/navbar/navbar.component";
 })
 export class ProfileComponent {
 
+  showProfileForm = signal(true);
+  showSubscriptionForm = signal(false);
+  activeView = signal('profile');
 
-  showProfileForm: boolean = true;
-  showSubscriptionForm: boolean = false;
-  activeView: string = 'profile'; 
-
+  
   toggleView(view: string) {
-    this.activeView = view; 
+    this.activeView.set(view); 
     if (view === 'profile') {
-      this.showProfileForm = true;
-      this.showSubscriptionForm = false;
+      this.showProfileForm.set(true);  
+      this.showSubscriptionForm.set(false);  
     } else if (view === 'subscription') {
-      this.showProfileForm = false;
-      this.showSubscriptionForm = true;
+      this.showProfileForm.set(false);  
+      this.showSubscriptionForm.set(true);  
     }
   }
  

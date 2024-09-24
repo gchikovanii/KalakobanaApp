@@ -4,13 +4,13 @@
       <div class="sticky flex flex-col gap-2 p-4 text-sm border-r border-indigo-300 top-12 bg-[#202142] rounded-lg shadow-lg">
         <h2 class="pl-3 mb-4 text-2xl font-semibold">პარამეტრები</h2>
         <a (click)="toggleView('profile')" 
-           [ngClass]="{'bg-indigo-600 text-white': activeView === 'profile', 'text-indigo-300 hover:bg-indigo-600 hover:text-white': activeView !== 'profile'}"
+           [ngClass]="{'bg-indigo-600 text-white': activeView() === 'profile', 'text-indigo-300 hover:bg-indigo-600 hover:text-white': activeView() !== 'profile'}"
            class="flex items-center px-3 py-2.5 font-bold rounded-full cursor-pointer">
           პროფილი
           
         </a>
         <a (click)="toggleView('subscription')" 
-           [ngClass]="{'bg-indigo-600 text-white': activeView === 'subscription', 'text-indigo-300 hover:bg-indigo-600 hover:text-white': activeView !== 'subscription'}"
+           [ngClass]="{'bg-indigo-600 text-white': activeView() === 'subscription', 'text-indigo-300 hover:bg-indigo-600 hover:text-white': activeView() !== 'subscription'}"
            class="flex items-center px-3 py-2.5 font-semibold rounded-full cursor-pointer">
           გამოწერა
         </a>
@@ -19,7 +19,7 @@
   
     <main class="w-full min-h-screen py-1 md:w-2/3 lg:w-3/4">
       <div class="p-2 md:p-6 lg:p-8">
-        @if(showProfileForm){
+        @if(showProfileForm()){
             <div class="w-full px-8 pb-12 mt-8 sm:max-w-4xl sm:rounded-lg bg-[#202142] shadow-lg">
                 <h2 class="pl-6 text-2xl font-bold text-white sm:text-xl mt-1 pt-3" >საჯარო პროფილი</h2>
                 <!-- Profile Form Content -->
@@ -43,13 +43,13 @@
                     </div>
                   </div>
                   <div class="flex flex-col sm:col-span-1">
-                    <label for="first_name" class="block mb-2 text-sm font-medium text-indigo-300">Your სახელი</label>
+                    <label for="first_name" class="block mb-2 text-sm font-medium text-indigo-300">სახელი</label>
                     <input type="text" id="first_name"
                            class="bg-[#161931] border border-indigo-300 text-white text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
                            placeholder="შენი სახელი" value="გიორგი" required>
                   </div>
                   <div class="flex flex-col sm:col-span-1">
-                    <label for="last_name" class="block mb-2 text-sm font-medium text-indigo-300">Your გვარი</label>
+                    <label for="last_name" class="block mb-2 text-sm font-medium text-indigo-300">გვარი</label>
                     <input type="text" id="last_name"
                            class="bg-[#161931] border border-indigo-300 text-white text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
                            placeholder="შენი გვარი" value="ჩიქოვანი" required>
@@ -66,12 +66,7 @@
                            class="bg-[#161931] border border-indigo-300 text-white text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
                            placeholder="your profession" required>
                   </div>
-                  <div class="flex flex-col sm:col-span-2">
-                    <label for="message" class="block mb-2 text-sm font-medium text-indigo-300">ბიო</label>
-                    <textarea id="message" rows="4"
-                              class="block p-2.5 w-full text-sm text-white bg-[#161931] rounded-lg border border-indigo-300 focus:ring-indigo-500 focus:border-indigo-500"
-                              placeholder="შენ შესახებ..."></textarea>
-                  </div>
+                 
                 </div>
                 <div class="flex justify-end mt-6">
                   <button type="submit"
@@ -82,7 +77,7 @@
               </div>
         }
        
-        @if(showSubscriptionForm){
+        @if(showSubscriptionForm()){
             <div  class="w-full max-w-4xl px-10 py-10 mt-10 sm:rounded-lg bg-[#202142] shadow-lg mx-auto">
                 <h2 class="text-3xl font-extrabold text-white mb-4 sm:text-2xl">გამოწერა</h2>
                 <p class="text-base text-indigo-200 mb-8 leading-relaxed">აკონტროლეთ გამოწერის ალერტი. სიახლეების მისაღებად მონიშნეთ ღილაკი. გაუქმებისთვის წაშალეთ მონიშვნა და შეინახეთ ქმედება:</p>
