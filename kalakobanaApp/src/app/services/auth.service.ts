@@ -40,17 +40,6 @@ export class AuthService {
       })
     );
   }
-
-  getUserProfileForPage() {
-    return this.httpClient.get<UserDto>(`${this.apiUrl}/bff/user/profile`, { withCredentials: true });
-  }
-  updateUserProfile(profileDto: UpdateProfileDto) {
-    return this.httpClient.post(`${this.apiUrl}/bff/user/profile/update`, profileDto, { withCredentials: true });
-  }
-    
-
-
-
   // Getter for login status as Observable
   isLoggedIn(): Observable<boolean> {
     return this.loggedIn.asObservable();
