@@ -7,11 +7,10 @@
     <button (click)="toggleNavbar()" class="flex items-center">
       <img class="w-8 h-8 rounded-full border border-white" src="logo_1.jpeg" alt="Profile">
       <span class="hidden lg:inline-block ml-2 text-white font-semibold">
-        <span *ngIf="givenName; else loggedOutMessage">Welcome, {{ givenName }}!</span>
+        @if(givenName){
+          <span >მომხმარებელი: {{ givenName }}</span>
+        }
       </span>
-      <ng-template #loggedOutMessage>
-        <span class="text-white">Welcome, Guest!</span>
-      </ng-template>
       <!-- Add a caret icon to indicate dropdown -->
       <fa-icon [icon]="faCaretDown" class="ml-2 text-white"></fa-icon>
     </button>
@@ -19,14 +18,16 @@
     <div [ngClass]="{ 'hidden': !isNavbarOpen }" class="absolute right-0 mt-2 w-48 bg-gradient-to-r from-cyan-500 to-blue-600 dark:bg-gradient-to-r dark:from-blue-800 dark:to-cyan-700 shadow-lg rounded-lg px-4 py-2 z-10">
       <ul class="flex flex-col gap-2 mt-2">
         <li class="flex items-center gap-2 text-white hover:text-gray-300 transition px-2">
+          <fa-icon [icon]="faGamePad"></fa-icon>
+          <a (click)="goToProfile()" style="cursor: pointer;" class="text-sm">თამაში</a>
+        </li>
+        <li class="flex items-center gap-2 text-white hover:text-gray-300 transition px-2">
           <fa-icon [icon]="faTachometerAlt"></fa-icon>
           <a (click)="goToProfile()" style="cursor: pointer;" class="text-sm">პროფილი</a>
         </li>
+       
         <li class="flex items-center gap-2 text-white hover:text-gray-300 transition px-2">
           <fa-icon [icon]="faSignOutAlt"></fa-icon>
-          <!-- <form (ngSubmit)="logOut()" class="flex items-center">
-            <button type="submit" class="text-sm">გამოსვლა</button>
-          </form> -->
           <button class="text-sm" (click)="logOut()">გამოსვლა</button>
         </li>
       </ul>

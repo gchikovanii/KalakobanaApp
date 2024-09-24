@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {  faCaretDown, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import {  faCaretDown, faGamepad, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../services/auth.service';
 import { CustomUserProfile } from '../../Models/userprofile';
 
@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit{
   faSignOutAlt = faSignOutAlt;
   faTachometerAlt = faUser;
   faCaretDown = faCaretDown;
+  faGamePad = faGamepad;
   isNavbarOpen = false;
   ngOnInit(): void {
     // First check login status
@@ -56,7 +57,9 @@ export class NavbarComponent implements OnInit{
   goToProfile() {
     this.router.navigate(['/profile']);
   }
-
+  goToGameHub(){
+    this.router.navigate(['/game-hub']);
+  }
   logOut() {
     this.authService.logout().subscribe({
       next: () => {
