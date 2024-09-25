@@ -21,10 +21,11 @@ export class WelcomeComponent {
   toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
   }
+  
   login() {
     const returnUrl = encodeURIComponent('https://localhost:4200/game-hub'); 
     window.location.href = `https://localhost:7250/api/auth/login?returnUrl=${returnUrl}`;
-}
+  }
 
   register(){
     const returnUrl = encodeURIComponent('https://localhost:4200/singout'); 

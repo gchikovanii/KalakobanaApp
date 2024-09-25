@@ -54,9 +54,7 @@ export class NavbarComponent implements OnInit{
     this.isNavbarOpen = false;
   }
 
-  goToProfile() {
-    this.router.navigate(['/profile']);
-  }
+  
   goToGameHub(){
     this.router.navigate(['/game-hub']);
   }
@@ -69,6 +67,12 @@ export class NavbarComponent implements OnInit{
         console.error('Logout error:', err);
       }
     });
+  }
+  // goToProfile() {
+  //   this.router.navigate(['/profile']);
+  // }
+  goToProfile() {
+    window.location.href = `https://localhost:7250/api/auth/profile`;
   }
 
   @HostListener('document:click', ['$event'])
