@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { CustomUserProfile } from '../Models/userprofile';
 import { environment } from '../../environments/environment';
-import { UserDto } from '../Models/UserDto';
-import { UpdateProfileDto } from '../Models/updateProfileDTO';
 
 @Injectable({
   providedIn: 'root'

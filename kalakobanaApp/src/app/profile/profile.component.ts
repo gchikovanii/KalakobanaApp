@@ -5,7 +5,7 @@ import { NavbarComponent } from "../shared/navbar/navbar.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProfileService } from '../services/profile.service';
 import { UpdateProfileDto } from '../Models/updateProfileDTO';
-import { UserDto } from '../Models/UserDto';
+import { UserDto } from '../Models/userAgg';
 
 @Component({
   selector: 'app-profile',
