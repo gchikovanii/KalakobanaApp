@@ -1,0 +1,27 @@
+<mat-sidenav-container class="main-container">
+  <!-- Left Sidebar -->
+  <mat-sidenav mode="side" opened class="sidenav">
+    <mat-nav-list>
+      <h3>მენიუ</h3>
+      <mat-list-item [routerLink]="['/']" >
+        შემომავალი დატა
+      </mat-list-item>
+     
+      <mat-list-item [routerLink]="['/custom-manipulation']">
+        მომხმარებლების მართვა
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/custom-data-manipulation']">
+        დამატება
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/']">
+        გასვლა
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Right Content Area -->
+  <mat-sidenav-content class="content-area">
+    <!-- Insert your table component here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

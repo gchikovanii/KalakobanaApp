@@ -1,0 +1,31 @@
+<div class="form-container">
+    <mat-card class="form-card">
+      <h3>სიაში დამატება</h3>
+  
+      <form [formGroup]="addElementForm" (ngSubmit)="onSubmit()">
+        <!-- Value Input -->
+        <mat-form-field appearance="fill">
+          <mat-label>მნიშვნელობა</mat-label>
+          <input matInput formControlName="value" required>
+        </mat-form-field>
+  
+        <!-- Dropdown with Options -->
+        <mat-form-field appearance="fill">
+          <mat-label>ვარიანტები</mat-label>
+          <mat-select formControlName="option" required>
+            <mat-option value="name">სახელი</mat-option>
+            <mat-option value="surname">გვარი</mat-option>
+            <mat-option value="country">ქვეყანა</mat-option>
+            <mat-option value="city">ქალაქი</mat-option>
+            <mat-option value="river">მცენარე</mat-option>
+            <mat-option value="river">ცხოველი</mat-option>
+            <mat-option value="river">ფილმი</mat-option>
+            <mat-option value="river">მდინარე</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <!-- Save Button -->
+        <button class="cust-button" mat-raised-button color="primary" type="submit">შენახვა</button>
+      </form>
+    </mat-card>
+  </div>

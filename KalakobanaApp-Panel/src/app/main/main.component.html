@@ -1,0 +1,42 @@
+<!-- requests-table.component.html -->
+<div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+  
+      <!-- Sent By Column -->
+      <ng-container matColumnDef="sentBy">
+        <th mat-header-cell *matHeaderCellDef> გამომგზავნი </th>
+        <td mat-cell *matCellDef="let element"> {{element.sentBy}} </td>
+      </ng-container>
+  
+      <!-- Value Column -->
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef> ცხრილის სახელი </th>
+        <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+      </ng-container>
+  
+      <!-- Xname Column -->
+      <ng-container matColumnDef="xname">
+        <th mat-header-cell *matHeaderCellDef> მნიშვნელობა </th>
+        <td mat-cell *matCellDef="let element"> {{element.xname}} </td>
+      </ng-container>
+  
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> ქმედება </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" (click)="accept(element)">
+            ჩამატება
+          </button>
+          <button mat-raised-button color="warn" (click)="delete(element)">
+            წაშლა
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+  
