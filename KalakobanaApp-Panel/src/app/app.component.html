@@ -1,6 +1,6 @@
 @if(!isLoggedIn()){
     <div style="display: flex; justify-content: center; align-items: center; margin-top: 15%;">
-        <button  class="cust-button" mat-raised-button color="primary" type="submit">შესვლა და ადმინ პანელის გააქტიურება</button>
+        <button (click)="redirect()" class="cust-button" mat-raised-button color="primary" type="submit">შესვლა და ადმინ პანელის გააქტიურება</button>
     </div>
 
 }

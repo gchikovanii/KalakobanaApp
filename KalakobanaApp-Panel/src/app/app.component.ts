@@ -40,5 +40,10 @@ export class AppComponent {
       }
     });
   }
+  redirect(){
+    const returnUrl = encodeURIComponent('https://localhost:4300'); 
+    window.location.href = `https://localhost:7250/api/auth/login?returnUrl=${returnUrl}`;
+  }
+  
 }
 

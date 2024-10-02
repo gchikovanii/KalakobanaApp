@@ -13,7 +13,7 @@
       <mat-list-item [routerLink]="['/custom-data-manipulation']">
         დამატება
       </mat-list-item>
-      <mat-list-item [routerLink]="['/']">
+      <mat-list-item (click)="logOut()">
         გასვლა
       </mat-list-item>
     </mat-nav-list>

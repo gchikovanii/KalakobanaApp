@@ -18,8 +18,6 @@ export class AuthService {
     );
   }
 
-  
-
   // Check login status and return only boolean (true if user is logged in, false otherwise)
   checkLoginStatus(): Observable<boolean> {
     return this.getUserProfile().pipe(

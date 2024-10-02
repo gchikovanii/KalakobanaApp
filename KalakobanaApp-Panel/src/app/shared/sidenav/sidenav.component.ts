@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -11,5 +12,17 @@ import { RouterModule } from '@angular/router';
   styleUrl: './sidenav.component.css'
 })
 export class SidenavComponent {
-
+  authService = inject(AuthService);
+  router = inject(Router);
+  logOut() {
+    this.authService.logout().subscribe({
+      next: () => {
+        location.reload();
+      },
+      error: (err) => {
+        console.error('Logout error:', err);
+        location.reload();
+      }
+    });
+  }
 }
