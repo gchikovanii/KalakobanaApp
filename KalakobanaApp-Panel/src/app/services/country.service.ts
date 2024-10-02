@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CountryService {
 
-  private baseUrl = 'api/Country'; 
+  private baseUrl = 'bff/adminpanel/Country'; 
   http = inject(HttpClient);
 
   addCountry(country: { value: string }): Observable<any> {

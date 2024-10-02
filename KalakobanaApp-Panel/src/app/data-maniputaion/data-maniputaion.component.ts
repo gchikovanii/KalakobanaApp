@@ -18,6 +18,7 @@ import { RiverService } from '../services/river.service';
 import { MovieService } from '../services/movie.service';
 import { AnimalService } from '../services/animal.service';
 import { PlantService } from '../services/plant.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-data-maniputaion',
@@ -43,6 +44,8 @@ export class DataManiputaionComponent {
   animalService = inject(AnimalService);
   movieService = inject(MovieService);
   riverService = inject(RiverService);
+  snackBar = inject(MatSnackBar);
+
   constructor(
     private fb: FormBuilder
   ) {
@@ -59,59 +62,61 @@ export class DataManiputaionComponent {
     switch (selectedOption) {
       case 'city':
         this.cityService.addCity({ value }).subscribe(response => {
-          console.log('City added:', response);
-          // Handle success (e.g., show a success message)
+          this.snackBar.open(`City added ${response.value}`, 'Close', { duration: 3000 }); 
+          console.log(response.value);
         }, error => {
-          console.error('Error adding city:', error);
+          this.snackBar.open(`Error adding City ${error}`, 'Close', { duration: 3000 });
         });
         break;
       case 'country':
         this.countryService.addCountry({ value }).subscribe(response => {
-          console.log('Country added:', response);
+          this.snackBar.open(`Country added ${response.value}`, 'Close', { duration: 3000 }); 
         }, error => {
-          console.error('Error adding country:', error);
+          this.snackBar.open(`Error adding Country ${error}`, 'Close', { duration: 3000 });
         });
         break;
         case 'firstName':
           this.firstNameService.addFirstName({ value }).subscribe(response => {
-            console.log('First Name added:', response);
+            this.snackBar.open(`First Name added ${response.value}`, 'Close', { duration: 3000 }); 
           }, error => {
-            console.error('Error adding country:', error);
+            this.snackBar.open(`Error adding First Name ${error}`, 'Close', { duration: 3000 });
           });
           break;
         case 'lastName':
           this.lastNameService.addLastName({ value }).subscribe(response => {
-            console.log('Last Name added:', response);
+            this.snackBar.open(`Last Name added ${response.value}`, 'Close', { duration: 3000 });
           }, error => {
-            console.error('Error adding country:', error);
+            this.snackBar.open(`Error adding Last Name ${error}`, 'Close', { duration: 3000 });
           });
           break;
           case 'river':
             this.riverService.addRiver({ value }).subscribe(response => {
-              console.log('Last Name added:', response);
+              this.snackBar.open(`River added ${response.value}`, 'Close', { duration: 3000 }); 
             }, error => {
-              console.error('Error adding country:', error);
+              this.snackBar.open(`Error adding River ${error}`, 'Close', { duration: 3000 });
             });
             break;      
             case 'movie':
             this.movieService.addMovie({ value }).subscribe(response => {
-              console.log('Last Name added:', response);
+              this.snackBar.open(`Movie added ${response.value}`, 'Close', { duration: 3000 }); 
             }, error => {
-              console.error('Error adding country:', error);
+              this.snackBar.open(`Error adding Movie ${error}`, 'Close', { duration: 3000 });
+
             });
             break;   
             case 'plant':
               this.plantService.addPlant({ value }).subscribe(response => {
-                console.log('Last Name added:', response);
+                this.snackBar.open(`Plant added ${response.value}`, 'Close', { duration: 3000 });
               }, error => {
-                console.error('Error adding country:', error);
+                this.snackBar.open(`Error adding Plant ${error}`, 'Close', { duration: 3000 });
               });
               break;          
               case 'animal':
                 this.animalService.addAnimal({ value }).subscribe(response => {
-                  console.log('Last Name added:', response);
+                  this.snackBar.open(`Animal added ${response.value}`, 'Close', { duration: 3000 }); 
                 }, error => {
-                  console.error('Error adding country:', error);
+                  this.snackBar.open(`Error adding animal ${error}`, 'Close', { duration: 3000 });
+                  console.log(error);
                 });
                 break;                                 
       // Add more cases for other options as needed

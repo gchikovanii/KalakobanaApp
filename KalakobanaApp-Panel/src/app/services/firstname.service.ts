@@ -6,18 +6,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FirstnameService {
-  private baseUrl = 'api/FirstName'; 
+  private baseUrl = 'bff/adminpanel/FirstName'; 
 
   http =inject(HttpClient);
 
   addFirstName(firstName: { value: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}`, firstName);
+    return this.http.post(`${this.baseUrl}`, firstName, { withCredentials: true });
   }
   deleteFirstName(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
   }
 
   getFirstNameByName(name: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/GetByName?name=${name}`);
+    return this.http.get(`${this.baseUrl}/GetByName?name=${name}`, { withCredentials: true });
   }
 }

@@ -6,17 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PlantService {
-  private baseUrl = 'api/Plant'; 
+  private baseUrl = 'bff/adminpanel/Plant'; 
 
   http =inject(HttpClient);
 
   addPlant(plant: { value: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}`, plant);
+    return this.http.post(`${this.baseUrl}`, plant, { withCredentials: true });
   }
   deletePlant(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
   }
   getPlantByName(name: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/GetByName?name=${name}`);
+    return this.http.get(`${this.baseUrl}/GetByName?name=${name}`, { withCredentials: true });
   }
 }
