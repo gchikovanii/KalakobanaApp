@@ -10,6 +10,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
 import { SidenavComponent } from "../shared/sidenav/sidenav.component";
+import { CityService } from '../services/city.service';
+import { CountryService } from '../services/country.service';
 
 @Component({
   selector: 'app-data-maniputaion',
@@ -25,23 +27,47 @@ import { SidenavComponent } from "../shared/sidenav/sidenav.component";
   templateUrl: './data-maniputaion.component.html',
   styleUrl: './data-maniputaion.component.css'
 })
-export class DataManiputaionComponent  implements OnInit {
-  addElementForm!: FormGroup;
+export class DataManiputaionComponent {
+  addElementForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {
+  constructor(
+    private fb: FormBuilder,
+    private cityService: CityService,
+    private countryService: CountryService
+  ) {
     this.addElementForm = this.fb.group({
       value: ['', Validators.required],
       option: ['', Validators.required]
     });
   }
 
-  onSubmit(): void {
-    if (this.addElementForm.valid) {
-      const newElement = this.addElementForm.value;
-      console.log('Element added:', newElement);
-      // You can add logic here to store the new element in the table or send it to the backend.
+  onSubmit() {
+    const selectedOption = this.addElementForm.value.option;
+    const value = this.addElementForm.value.value;
+
+    switch (selectedOption) {
+      case 'city':
+        this.cityService.addCity({ value }).subscribe(response => {
+          console.log('City added:', response);
+          // Handle success (e.g., show a success message)
+        }, error => {
+          console.error('Error adding city:', error);
+          // Handle error (e.g., show an error message)
+        });
+        break;
+      case 'country':
+        this.countryService.addCountry({ value }).subscribe(response => {
+          console.log('Country added:', response);
+          // Handle success (e.g., show a success message)
+        }, error => {
+          console.error('Error adding country:', error);
+          // Handle error (e.g., show an error message)
+        });
+        break;
+      // Add more cases for other options as needed
+      default:
+        console.warn('No valid option selected');
+        break;
     }
   }
 }
