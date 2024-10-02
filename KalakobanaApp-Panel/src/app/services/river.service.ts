@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RiverService {
-  private baseUrl = 'bff/adminpanel/River'; 
+  private baseUrl = environment.panelApiUrl + 'bff/adminpanel/River'; 
 
   http =inject(HttpClient);
 
