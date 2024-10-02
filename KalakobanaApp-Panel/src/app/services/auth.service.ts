@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { CustomUserProfile } from '../models/CustomUserProfile';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private apiUrl = 'https://localhost:7250/api'; 
+  private apiUrl = environment.apiUrl; 
   private loggedIn = new BehaviorSubject<boolean>(false); 
 
   constructor(private httpClient: HttpClient) {}

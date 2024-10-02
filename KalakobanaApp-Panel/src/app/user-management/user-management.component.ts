@@ -11,6 +11,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { SidenavComponent } from "../shared/sidenav/sidenav.component";
+import { CustomUser } from '../models/CustomUser';
+import { UserService } from '../services/user.service';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar
 
 @Component({
   selector: 'app-user-management',
@@ -21,15 +26,24 @@ import { SidenavComponent } from "../shared/sidenav/sidenav.component";
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule,
+    MatCardModule, FormsModule,ReactiveFormsModule,CommonModule,
     MatToolbarModule, MatSlideToggleModule, SidenavComponent],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
 export class UserManagementComponent {
-  displayedColumns: string[] = ['email', 'isActive'];
-  userDataSource = new MatTableDataSource(); // Replace USER_DATA with real data from DB
+  userDataSource = new MatTableDataSource<CustomUser>();
+  email: string | null | undefined = '';
+
+  form = new FormGroup({
+    email: new FormControl('')
+  })
+
+  displayedColumns: string[] = ['email', 'active', 'update'];
   router = inject(Router);
+  userService = inject(UserService);
+  snackBar = inject(MatSnackBar);
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit() {
@@ -37,6 +51,33 @@ export class UserManagementComponent {
   }
   goToMain(){
     this.router.navigate(['/']);
+  }
+  onSubmit() {
+    this.email = this.form.value.email;
+    console.log(this.email)
+    if (this.email) {
+      this.userService.getUserByEmail(this.email).subscribe({
+        next: (user) => {
+          // Set the data source for the table with the retrieved user data
+          this.userDataSource.data = user ? [user] : []; // Wrap user in an array for the table
+        },
+        error: (err) => {
+          console.error('Error fetching user', err);
+          this.userDataSource.data = []; // Clear the table on error
+        }
+      });
+    }
+  }
+    updateStatus(user: CustomUser) {
+      debugger;
+      this.userService.updateStatus(user).subscribe({
+        next: () => {
+          this.snackBar.open(`Status updated for ${user.email}`, 'Close', { duration: 3000 }); // Show success Snackbar
+        },
+        error: (err) => {
+          this.snackBar.open(`Failed to update status for ${user.email}`, 'Close', { duration: 3000 });
+        }
+      });
   }
 }
 
