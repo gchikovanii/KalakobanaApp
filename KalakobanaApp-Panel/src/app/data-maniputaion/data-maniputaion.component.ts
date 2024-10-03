@@ -125,4 +125,142 @@ export class DataManiputaionComponent {
         break;
     }
   }
+
+  onGet() {
+    const selectedOption = this.addElementForm.value.option;
+    const value = this.addElementForm.value.value;
+
+    switch (selectedOption) {
+      case 'city':
+        this.cityService.getCityByName(value).subscribe(response => {
+          this.snackBar.open(`Found City: ${response.value}`, 'Close', { duration: 3000 });
+        }, error => {
+          this.snackBar.open(`${error.error[0]?.message}`, 'Close', { duration: 3000 });
+        });
+        break;
+        case 'country':
+          this.countryService.getCountryByName(value).subscribe(response => {
+            this.snackBar.open(`Found Country: ${response.value}`, 'Close', { duration: 3000 });
+          }, error => {
+            this.snackBar.open(`${error.error[0]?.message}`, 'Close', { duration: 3000 });
+          });
+          break;  
+          case 'firstName':
+          this.firstNameService.getFirstNameByName(value).subscribe(response => {
+            this.snackBar.open(`Found FirstName: ${response.value}`, 'Close', { duration: 3000 });
+          }, error => {
+            this.snackBar.open(`${error.error[0]?.message}`, 'Close', { duration: 3000 });
+          });
+          break;  
+          case 'lastName':
+          this.lastNameService.getLastNameByName(value).subscribe(response => {
+            this.snackBar.open(`Found LastName: ${response.value}`, 'Close', { duration: 3000 });
+          }, error => {
+            this.snackBar.open(`${error.error[0]?.message}`, 'Close', { duration: 3000 });
+          });
+          break;  
+          case 'animal':
+            this.animalService.getAnimalByName(value).subscribe(response => {
+              this.snackBar.open(`Found Animal: ${response.value}`, 'Close', { duration: 3000 });
+            }, error => {
+              this.snackBar.open(`${error.error[0]?.message}`, 'Close', { duration: 3000 });
+            });
+            break;  
+            case 'plant':
+              this.plantService.getPlantByName(value).subscribe(response => {
+                this.snackBar.open(`Found Plant: ${response.value}`, 'Close', { duration: 3000 });
+              }, error => {
+                this.snackBar.open(`${error.error[0]?.message}`, 'Close', { duration: 3000 });
+              });
+              break;  
+              case 'movie':
+                this.movieService.getMovieByName(value).subscribe(response => {
+                  this.snackBar.open(`Found Movie: ${response.value}`, 'Close', { duration: 3000 });
+                }, error => {
+                  this.snackBar.open(`${error.error[0]?.message}`, 'Close', { duration: 3000 });
+                });
+                break;  
+                case 'river':
+                  this.riverService.getRiverByName(value).subscribe(response => {
+                    this.snackBar.open(`Found River: ${response.value}`, 'Close', { duration: 3000 });
+                  }, error => {
+                    this.snackBar.open(`${error.error[0]?.message}`, 'Close', { duration: 3000 });
+                  });
+                  break;  
+        // Similar cases for oth
+      // Similar cases for other options...
+      default:
+        console.warn('No valid option selected');
+        break;
+    }
+  }
+
+  // Method to Delete Data
+  onDelete() {
+    const selectedOption = this.addElementForm.value.option;
+    const value = this.addElementForm.value.value; // Assuming value contains the ID for deletion
+
+    switch (selectedOption) {
+      case 'city':
+        this.cityService.deleteCity(+value).subscribe(() => {
+          this.snackBar.open(`Deleted City with ID ${value}`, 'Close', { duration: 3000 });
+        }, error => {
+          this.snackBar.open(`${error.error}`, 'Close', { duration: 3000 });
+        });
+        break;
+        case 'country':
+          this.countryService.deleteCountry(+value).subscribe(() => {
+            this.snackBar.open(`Deleted Country with ID ${value}`, 'Close', { duration: 3000 });
+          }, error => {
+            this.snackBar.open(`${error.error}`, 'Close', { duration: 3000 });
+          });
+          break;  
+          case 'fistName':
+            this.firstNameService.deleteFirstName(+value).subscribe(() => {
+              this.snackBar.open(`Deleted First Name with ID ${value}`, 'Close', { duration: 3000 });
+            }, error => {
+              this.snackBar.open(`${error.error}`, 'Close', { duration: 3000 });
+            });
+            break;  
+            case 'lastName':
+              this.lastNameService.deleteLastName(+value).subscribe(() => {
+                this.snackBar.open(`Deleted Last Name with ID ${value}`, 'Close', { duration: 3000 });
+              }, error => {
+                this.snackBar.open(`${error.error}`, 'Close', { duration: 3000 });
+              });
+              break;  
+              case 'animal':
+                this.animalService.deleteAnimal(+value).subscribe(() => {
+                  this.snackBar.open(`Deleted Animal with ID ${value}`, 'Close', { duration: 3000 });
+                }, error => {
+                  this.snackBar.open(`${error.error}`, 'Close', { duration: 3000 });
+                });
+                break;  
+                case 'plant':
+                  this.plantService.deletePlant(+value).subscribe(() => {
+                    this.snackBar.open(`Deleted Plant with ID ${value}`, 'Close', { duration: 3000 });
+                  }, error => {
+                    this.snackBar.open(`${error.error}`, 'Close', { duration: 3000 });
+                  });
+                  break;  
+                  case 'movie':
+                    this.movieService.deleteMovie(+value).subscribe(() => {
+                      this.snackBar.open(`Deleted Movie with ID ${value}`, 'Close', { duration: 3000 });
+                    }, error => {
+                      this.snackBar.open(`${error.error}`, 'Close', { duration: 3000 });
+                    });
+                    break;  
+                    case 'river':
+                      this.riverService.deleteRiver(+value).subscribe(() => {
+                        this.snackBar.open(`Deleted River with ID ${value}`, 'Close', { duration: 3000 });
+                      }, error => {
+                        this.snackBar.open(`${error.error}`, 'Close', { duration: 3000 });
+                      });
+                      break;  
+      default:
+        console.warn('No valid option selected');
+        break;
+    }
+  }
+
 }

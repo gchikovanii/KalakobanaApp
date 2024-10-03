@@ -25,7 +25,11 @@
         </mat-form-field>
   
         <!-- Save Button -->
-        <button class="cust-button" mat-raised-button color="primary" type="submit">შენახვა</button>
+        <div class="button-group">
+          <button class="cust-button" mat-raised-button color="primary" type="submit">შენახვა</button>
+          <button class="cust-button" mat-raised-button color="accent" type="button" (click)="onGet()">მიღება</button>
+          <button class="cust-button" mat-raised-button color="warn" type="button" (click)="onDelete()">წაშლა</button>
+        </div>
       </form>
     </mat-card>
   </div>
