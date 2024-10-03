@@ -14,10 +14,11 @@ export class CityService {
   addCity(city: { value: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}`, city, { withCredentials: true });
   }
-  deleteCity(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
+  deleteCity(name: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Delete/${name}`, {
+      withCredentials: true,
+    });
   }
-
   getCityByName(name: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/GetByName?name=${name}`, { withCredentials: true });
   }

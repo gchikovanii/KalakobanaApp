@@ -14,8 +14,10 @@ export class PlantService {
   addPlant(plant: { value: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}`, plant, { withCredentials: true });
   }
-  deletePlant(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
+  deletePlant(name: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Delete/${name}`, {
+      withCredentials: true,
+    });
   }
   getPlantByName(name: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/GetByName?name=${name}`, { withCredentials: true });

@@ -14,8 +14,10 @@ export class LastnameService {
   addLastName(lastName: { value: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}`, lastName, { withCredentials: true });
   }
-  deleteLastName(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
+  deleteLastName(name: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Delete/${name}`, {
+      withCredentials: true,
+    });
   }
 
   getLastNameByName(name: string): Observable<any> {

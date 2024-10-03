@@ -14,8 +14,10 @@ export class RiverService {
   addRiver(river: { value: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}`, river, { withCredentials: true });
   }
-  deleteRiver(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
+  deleteRiver(name: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Delete/${name}`, {
+      withCredentials: true,
+    });
   }
 
   getRiverByName(name: string): Observable<any> {

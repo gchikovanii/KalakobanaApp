@@ -58,11 +58,10 @@ export class UserManagementComponent {
     if (this.email) {
       this.userService.getUserByEmail(this.email).subscribe({
         next: (user) => {
-          // Set the data source for the table with the retrieved user data
           this.userDataSource.data = user ? [user] : []; // Wrap user in an array for the table
         },
         error: (err) => {
-          console.error('Error fetching user', err);
+          this.snackBar.open(`მომხმარებელი ${this.email}-ით არ არსებობს`, 'Close', { duration: 3000 });
           this.userDataSource.data = []; // Clear the table on error
         }
       });
@@ -72,10 +71,10 @@ export class UserManagementComponent {
       debugger;
       this.userService.updateStatus(user).subscribe({
         next: () => {
-          this.snackBar.open(`Status updated for ${user.email}`, 'Close', { duration: 3000 }); // Show success Snackbar
+          this.snackBar.open(`მომხარებლის პროფილი - ელ.ფოსტით ${user.email} წარმატებით განახლდა`, 'Close', { duration: 3000 }); // Show success Snackbar
         },
         error: (err) => {
-          this.snackBar.open(`Failed to update status for ${user.email}`, 'Close', { duration: 3000 });
+          this.snackBar.open(`შეცდომა, ${user.email}-ის პროფილი ვერ განახლდა`, 'Close', { duration: 3000 });
         }
       });
   }

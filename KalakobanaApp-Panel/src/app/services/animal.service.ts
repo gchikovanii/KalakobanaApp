@@ -15,8 +15,10 @@ export class AnimalService {
   addAnimal(animal: { value: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}`, animal, { withCredentials: true });
   }
-  deleteAnimal(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
+  deleteAnimal(name: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Delete/${name}`, {
+      withCredentials: true,
+    });
   }
 
   getAnimalByName(name: string): Observable<any> {

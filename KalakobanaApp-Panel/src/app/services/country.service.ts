@@ -14,8 +14,10 @@ export class CountryService {
   addCountry(country: { value: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}`, country, { withCredentials: true });
   }
-  deleteCountry(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
+  deleteCountry(name: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Delete/${name}`, {
+      withCredentials: true,
+    });
   }
   getCountryByName(name: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/GetByName?name=${name}`, { withCredentials: true });

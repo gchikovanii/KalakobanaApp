@@ -14,8 +14,10 @@ export class FirstnameService {
   addFirstName(firstName: { value: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}`, firstName, { withCredentials: true });
   }
-  deleteFirstName(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
+  deleteFirstName(name: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/DeleteFirstName/${name}`, {
+      withCredentials: true,
+    });
   }
 
   getFirstNameByName(name: string): Observable<any> {

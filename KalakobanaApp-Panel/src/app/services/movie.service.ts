@@ -14,8 +14,10 @@ export class MovieService {
   addMovie(movie: { value: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}`, movie, { withCredentials: true });
   }
-  deleteMovie(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { withCredentials: true });
+  deleteMovie(name: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Delete/${name}`, {
+      withCredentials: true,
+    });
   }
   getMovieByName(name: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/GetByName?name=${name}`, { withCredentials: true });
