@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { RoomService } from '../services/room.service';
+import { GameMode } from '../Models/GameMode';
 
 @Component({
   selector: 'app-game-hub',
@@ -32,6 +34,7 @@ export class GameHubComponent implements OnInit{
   selectedRoom: any = null;
   form!: FormGroup;
   router = inject(Router);
+  roomService = inject(RoomService);
   selectRoom(room: any) {
     this.selectedRoom = room;
   }
@@ -54,12 +57,29 @@ export class GameHubComponent implements OnInit{
         formData.rounds = Number(formData.maxcounts) * 3;
       }
       
-      
+      switch (formData.gameType) {
+        case 'კლასიკური':
+          formData.gameType = GameMode.Classic;
+          break;
+        case 'დუელი':
+          formData.gameType = GameMode.Duel;
+          break;
+        case 'ლიკვიდატორი':
+          formData.gameType = GameMode.Liquidator;
+          break;
+          case 'კონფიგურატორი':
+            formData.gameType = GameMode.Customizable;
+            break;
+        default:
+          console.error('Unknown game type');
+          return;
+      }
       const requestData = {
         name: formData.name,
         password: formData.password,
         maxUsersInRoomCount: formData.maxcounts, // assuming `maxcounts` corresponds to `MaxUsersInRoomCount`
-        gameMode: formData.gameType,  // assuming `gameType` corresponds to `GameMode`
+        gameMode: formData.gameType, 
+         // assuming `gameType` corresponds to `GameMode`
         rounds: formData.rounds,
         adminId: 'AdminMocked', 
   
@@ -75,7 +95,15 @@ export class GameHubComponent implements OnInit{
           includeRiver: formData.river
         }
       };
-  
+      console.log(requestData);
+      this.roomService.createRoom(requestData).subscribe(
+        (response) => {
+          console.log('Room created successfully', response);
+        },
+        (error) => {
+          console.error('Error creating room', error);
+        }
+      );
 
     }
   }
