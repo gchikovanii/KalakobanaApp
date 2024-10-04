@@ -8,16 +8,18 @@ import { RoomService } from '../services/room.service';
 import { GameMode } from '../Models/GameMode';
 import { Room } from '../Models/room';
 import { RoomResponse } from '../Models/roomRespose';
+import { RoomLoaderComponent } from "../room-loader/room-loader.component";
 
 @Component({
   selector: 'app-game-hub',
   standalone: true,
-  imports: [NavbarComponent,CommonModule, RouterModule,ReactiveFormsModule,FormsModule ],
+  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, RoomLoaderComponent],
   templateUrl: './game-hub.component.html',
   styleUrl: './game-hub.component.css'
 })
 export class GameHubComponent implements OnInit{
   roomResponses: RoomResponse[] = [];
+  isLoading: boolean = false;
   userClaims: any;
   showConfigurableOptions = signal(false);
   showRoundCustomizable = signal(false);
@@ -28,13 +30,16 @@ export class GameHubComponent implements OnInit{
    this.fetchRooms();
   }
   fetchRooms(): void {
+    this.isLoading = true; 
     this.roomService.getRooms().subscribe(
       (data: RoomResponse[]) => {
         this.roomResponses = data;
         console.log(this.roomResponses);
+        this.isLoading = false; 
       },
       (error) => {
         console.error('Error fetching room responses', error);
+        this.isLoading = false; 
       }
     );
   }
