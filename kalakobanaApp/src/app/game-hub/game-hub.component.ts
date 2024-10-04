@@ -38,8 +38,23 @@ export class GameHubComponent implements OnInit{
    submit() {
     if (this.form.valid) {
       const formData = this.form.value;
-      console.log(formData); 
+      if(formData.firstname == false && formData.lastname == false  && formData.city == false&& formData.country == false
+        && formData.animal == false && formData.plant == false && formData.river == false
+      ){
+        formData.firstname = true;formData.lastname = true;formData.city = true;formData.country = true;formData.animal = true;formData.plant = true;formData.river = true;
+      }
       //handle logic here
+      if(formData.gameType === 'კლასიკური'){
+        formData.rounds = 15;
+      }
+      else if(formData.gameType === 'დუელი'){
+        formData.maxCounts = 2;
+      }
+      else if(formData.gameType === 'ლიკვიდატორი'){
+        formData.rounds = Number(formData.maxcounts) * 3;
+      }
+      console.log(formData); 
+
     }
   }
   onGameTypeChange() {
@@ -94,7 +109,7 @@ initializeForm(){
     password: new FormControl(''),
     maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(16)] }),
     gameType: new FormControl('კლასიკური', [Validators.required]),
-    rounds: new FormControl('',{ validators: [Validators.required, Validators.max(33)] }) ,
+    rounds: new FormControl('',{ validators: [Validators.max(33)] }) ,
     firstname: new FormControl(false), // Checkbox for firstname
     lastname: new FormControl(false),
     city: new FormControl(false),
