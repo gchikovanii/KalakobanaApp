@@ -39,9 +39,14 @@ export class GameHubComponent implements OnInit{
     if (this.form.valid) {
       const formData = this.form.value;
       console.log(formData); 
+      //handle logic here
     }
   }
   onGameTypeChange() {
+    this.form.get('name')?.reset();
+    this.form.get('password')?.reset();
+    this.form.get('maxcounts')?.reset();
+    this.form.get('rounds')?.reset();
     const gameType = this.form.get('gameType')?.value;
     this.showConfigurableOptions.set(gameType === 'კონფიგურირებადი' || gameType === 'ლიკვიდატორი'
       || gameType === 'დუელი'
@@ -49,6 +54,12 @@ export class GameHubComponent implements OnInit{
      this.showRoundCustomizable.set(gameType === 'კონფიგურირებადი' || gameType === 'დუელი')
      this.showLikvidatorText.set(gameType ==='ლიკვიდატორი');
      this.duelConfiguration.set(gameType ==='დუელი')
+     if (this.duelConfiguration()) {
+      this.form.get('maxcounts')?.setValidators(Validators.max(2));
+    }
+    if(this.showLikvidatorText()){
+      this.form.get('rounds')?.setValidators(Validators.max(11));
+    }
     // Reset the rounds input if not "კონფიგურირებადი"
     if (!this.showConfigurableOptions) {
       this.form.get('rounds')?.reset();
@@ -81,7 +92,7 @@ initializeForm(){
   this.form = new FormGroup({
     name: new FormControl('', { validators: [Validators.required] }),
     password: new FormControl(''),
-    maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(11)] }),
+    maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(16)] }),
     gameType: new FormControl('კლასიკური', [Validators.required]),
     rounds: new FormControl('',{ validators: [Validators.required, Validators.max(33)] }) ,
     firstname: new FormControl(false), // Checkbox for firstname
