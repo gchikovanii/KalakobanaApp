@@ -4,6 +4,7 @@ export interface Room {
     maxUsersInRoomCount: number;
     gameMode: string;
     rounds: number;
+    status : boolean;
     adminId: string;
     settings: {
       includeFirstName: boolean;

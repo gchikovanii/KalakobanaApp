@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Room } from '../Models/room';
 import { CreateRoomRequest } from '../Models/createRoomRequest';
+import { RoomResponse } from '../Models/roomRespose';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class RoomService {
   constructor(private http: HttpClient) {}
 
   // Get all rooms
-  getRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(`${this.apiUrl}`);
+  getRooms(): Observable<RoomResponse[]> {
+    return this.http.get<RoomResponse[]>(`${this.apiUrl}`);
   }
   // Get a room by name
   getRoomByName(roomName: string): Observable<Room> {

@@ -6,6 +6,8 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { HttpClient } from '@angular/common/http';
 import { RoomService } from '../services/room.service';
 import { GameMode } from '../Models/GameMode';
+import { Room } from '../Models/room';
+import { RoomResponse } from '../Models/roomRespose';
 
 @Component({
   selector: 'app-game-hub',
@@ -15,6 +17,7 @@ import { GameMode } from '../Models/GameMode';
   styleUrl: './game-hub.component.css'
 })
 export class GameHubComponent implements OnInit{
+  roomResponses: RoomResponse[] = [];
   userClaims: any;
   showConfigurableOptions = signal(false);
   showRoundCustomizable = signal(false);
@@ -22,14 +25,42 @@ export class GameHubComponent implements OnInit{
   duelConfiguration = signal(false);
   http = inject(HttpClient);
   ngOnInit(): void {
-   
+   this.fetchRooms();
+  }
+  fetchRooms(): void {
+    this.roomService.getRooms().subscribe(
+      (data: RoomResponse[]) => {
+        this.roomResponses = data;
+        console.log(this.roomResponses);
+      },
+      (error) => {
+        console.error('Error fetching room responses', error);
+      }
+    );
   }
 
+  // Method to get the display name for the game mode
+  getGameModeName(gameMode: GameMode): string {
+    switch (gameMode) {
+      case GameMode.Classic:
+        return 'კლასიკური'; // Classic
+      case GameMode.Duel:
+        return 'დუელი'; // Duel
+      case GameMode.Liquidator:
+        return 'ლიკვიდატორი'; // Liquidator
+      case GameMode.Customizable:
+        return 'კონფიგურირებადი'; // Customizable
+      default:
+        return 'უცნობი'; // Unknown
+    }
+  }
 
-  rooms = [
-    { id: 1,name: 'სატესტო ოთახი 1', players: 1, maxPlayers: 10, isPrivate: false, mode: 'კლასიკური',gameStatus: false, },
-    {id: 2, name: 'სატესტო ოთახი 2', players: 2, maxPlayers: 5, isPrivate: true, mode: 'გადარჩენა',gameStatus: false,},
-  ];
+ 
+
+  // rooms = [
+  //   { id: 1,name: 'სატესტო ოთახი 1', players: 1, maxPlayers: 10, isPrivate: false, mode: 'კლასიკური',gameStatus: false, },
+  //   {id: 2, name: 'სატესტო ოთახი 2', players: 2, maxPlayers: 5, isPrivate: true, mode: 'გადარჩენა',gameStatus: false,},
+  // ];
 
   selectedRoom: any = null;
   form!: FormGroup;
@@ -131,7 +162,7 @@ export class GameHubComponent implements OnInit{
     }
   }
   refresh(){
-    //Refetch Data
+    this.fetchRooms();
   }
   isFormOpen = false;
 

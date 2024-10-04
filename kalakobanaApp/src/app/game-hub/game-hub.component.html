@@ -1,6 +1,6 @@
 <app-navbar />
 
-<div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
+<!-- <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
     <div class="text-xl font-bold text- dark:text-white mb-4">
       ოთახების სია - 3 აქტიური მოთამაშე 2 ოთახში
     </div>
@@ -89,9 +89,71 @@
         </tbody>
       </table>
     </div>
+  </div> -->
+
+  <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
+    <div class="text-xl font-bold dark:text-white mb-4">
+      ოთახების სია - {{ roomResponses.length }} ოთახი აქტიურია
+    </div>
+  
+    <div class="flex justify-end space-x-2 mb-4">
+      <button (click)="refresh()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">
+        განახლება
+      </button>
+      <button (click)="openForm()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded">
+        ოთახის დამატება
+      </button>
+    </div>
+  
+    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-indigo-700 uppercase bg-indigo-50 dark:bg-indigo-700 dark:text-white">
+          <tr>
+            <th scope="col" class="py-3 px-6">ოთახის სახელი</th>
+            <th scope="col" class="py-3 px-6">მოთამაშეები</th>
+            <th scope="col" class="py-3 px-6">პაროლი</th>
+            <th scope="col" class="py-3 px-6">თამაშის ტიპი</th>
+            <th scope="col" class="py-3 px-6">სტატუსი</th>
+            <th scope="col" class="py-3 px-6">ქმედება</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let room of roomResponses;" 
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-indigo-600 dark:hover:text-white dark:text-white">
+            <td class="py-4 px-6">{{ room.name }}</td>
+  
+            <td class="py-4 px-6">
+              {{ room.currentUserInRoomCount }}/{{ room.maxUsersInRoomCount }}
+            </td>
+  
+            <td class="py-4 px-6">
+              {{ room.password ? '************' : 'პაროლის გარეშე' }}
+            </td>
+  
+            <td class="py-4 px-6">
+              {{ getGameModeName(room.gameMode) }}
+            </td>
+  
+            <td class="py-4 px-6">
+              {{ room.status ? 'დაწყებული' : 'არ დაწყებულა' }}
+            </td>
+  
+            <td class="py-4 px-6 relative">
+              <button *ngIf="!room.status" (click)="openRedirectModal(room)" 
+                class="text-l text-indigo-400 hover:text-indigo-700 dark:hover:text-white">
+                შესვლა
+              </button>
+  
+              <div *ngIf="room.status" class="text-l text-indigo-400 dark:text-indigo-200">
+                <span class="cursor-not-allowed" title="თამაში დაწყებულია">თამაში დაწყებულია</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
-
+  
   @if(isFormOpen){
     <div class="fixed inset-0 flex items-center justify-center z-50">
       <div class="fixed inset-0 bg-black bg-opacity-50 z-40" (click)="closeForm()"></div>
