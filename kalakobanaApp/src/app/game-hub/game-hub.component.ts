@@ -53,7 +53,29 @@ export class GameHubComponent implements OnInit{
       else if(formData.gameType === 'ლიკვიდატორი'){
         formData.rounds = Number(formData.maxcounts) * 3;
       }
-      console.log(formData); 
+      
+      
+      const requestData = {
+        name: formData.name,
+        password: formData.password,
+        maxUsersInRoomCount: formData.maxcounts, // assuming `maxcounts` corresponds to `MaxUsersInRoomCount`
+        gameMode: formData.gameType,  // assuming `gameType` corresponds to `GameMode`
+        rounds: formData.rounds,
+        adminId: 'AdminMocked', 
+  
+        // Group the boolean values into the `settings` object
+        settings: {
+          includeFirstName: formData.firstname,
+          includeLastName: formData.lastname,
+          includeCity: formData.city,
+          includeCountry: formData.country,
+          includeAnimal: formData.animal,
+          includePlant: formData.plant,
+          includeMovie: formData.movie,
+          includeRiver: formData.river
+        }
+      };
+  
 
     }
   }
