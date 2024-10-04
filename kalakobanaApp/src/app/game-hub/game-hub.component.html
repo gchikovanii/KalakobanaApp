@@ -134,21 +134,24 @@
             />
           </div>
         
-          <div class="mb-4">
-            <label class="block text-sm font-medium text-white-700 dark:text-gray-300 mb-1">მოთამაშეების მაქსიმალური რაოდენობა</label>
-            <input
-              formControlName="maxcounts"
-              type="number"
-              class="remove-arrow w-full px-4 py-2 border rounded-lg focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-              placeholder="მოთამაშეების რაოდენობა"
-            />
-            @if(form.get('maxcounts')?.errors?.['max']){
-              <p  class="text-red-500">
-                მაქსიმალური რაოდენობა არის 16
-              </p>
-            }
-            
-          </div>
+          @if(!duelConfiguration()){
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-white-700 dark:text-gray-300 mb-1">მოთამაშეების მაქსიმალური რაოდენობა</label>
+              <input
+                formControlName="maxcounts"
+                type="number"
+                class="remove-arrow w-full px-4 py-2 border rounded-lg focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                placeholder="მოთამაშეების რაოდენობა"
+              />
+              @if(form.get('maxcounts')?.errors?.['max']){
+                <p  class="text-red-500">
+                  მაქსიმალური რაოდენობა არის 11
+                </p>
+              }
+              
+            </div>
+          }
+          
         
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">თამაშის ტიპი</label>
@@ -158,14 +161,14 @@
               class="w-full px-4 py-2 border rounded-lg focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             >
               <option value="კლასიკური">კლასიკური</option>
+              <option value="დუელი">დუელი</option>
               <option value="ლიკვიდატორი">ლიკვიდატორი</option>
-              <option value="უსასრულო">უსასრულო</option>
               <option value="კონფიგურირებადი">კონფიგურირებადი</option>
             </select>
           </div>
         
           <!-- Conditionally display this section if "კონფიგურირებადი" is selected -->
-          @if(showConfigurableOptions){
+          @if(showConfigurableOptions()){
             <div class="mb-4">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">მონიშნეთ</label>
               
@@ -238,21 +241,38 @@
               
               
             </div>
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">რაუნდი</label>
-              <input
-                type="number"
-                formControlName="rounds"
-                class="remove-arrow w-full px-4 py-2 border rounded-lg focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                placeholder="რაუნდების რაოდენობა"
-              />
-              @if(form.get('rounds')?.errors?.['max']){
-                <p class="text-red-500">
-                  რაუნდების მაქსიმალური რაოდენობა არის 33
-                </p>
-              }
-            </div>
+
+
 }
+@if(showRoundCustomizable()){
+  <div class="mb-4">
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">რაუნდი</label>
+    <input
+      type="number"
+      formControlName="rounds"
+      class="remove-arrow w-full px-4 py-2 border rounded-lg focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+      placeholder="რაუნდების რაოდენობა"
+    />
+    @if(form.get('rounds')?.errors?.['max']){
+      <p class="text-red-500">
+        რაუნდების მაქსიმალური რაოდენობა არის 33
+      </p>
+    }
+
+  </div>
+  }
+  @if(showLikvidatorText()){
+    <p class="text-red-500 mb-3">
+     ლიკვიდატორის არსი - ყოველი 3 რაუნდის შემდეგ 1 ადამიანი ყველაზე ნაკლები ქულით გავარდება!
+    </p>
+  }
+  @if(duelConfiguration()){
+    <p class="text-red-500 mb-3">
+      დუელის შემთხვევაში 2 ადამიანი თამაშობს ერთმანეთის წინააღმდეგ. თქვენ გაქვთ 3 სიცოცხლე და ვინც პიველი ჩაწვავს მას, ის წააგებს. 
+    </p>
+  }
+
+
           <div class="flex justify-end space-x-2">
             <button (click)="closeForm()" type="button" class="px-4 py-2 bg-gray-500 hover:bg-gray-400 text-white rounded-lg">გაუქმება</button>
             <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg" [disabled]="form.invalid">დამატება</button>

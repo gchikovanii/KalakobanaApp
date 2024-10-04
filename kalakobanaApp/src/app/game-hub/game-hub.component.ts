@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { NavbarComponent } from "../shared/navbar/navbar.component";
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
@@ -14,7 +14,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GameHubComponent implements OnInit{
   userClaims: any;
-
+  showConfigurableOptions = signal(false);
+  showRoundCustomizable = signal(false);
+  showLikvidatorText = signal(false);
+  duelConfiguration = signal(false);
   http = inject(HttpClient);
   ngOnInit(): void {
    
@@ -40,7 +43,12 @@ export class GameHubComponent implements OnInit{
   }
   onGameTypeChange() {
     const gameType = this.form.get('gameType')?.value;
-    this.showConfigurableOptions = gameType === 'კონფიგურირებადი';
+    this.showConfigurableOptions.set(gameType === 'კონფიგურირებადი' || gameType === 'ლიკვიდატორი'
+      || gameType === 'დუელი'
+     );
+     this.showRoundCustomizable.set(gameType === 'კონფიგურირებადი' || gameType === 'დუელი')
+     this.showLikvidatorText.set(gameType ==='ლიკვიდატორი');
+     this.duelConfiguration.set(gameType ==='დუელი')
     // Reset the rounds input if not "კონფიგურირებადი"
     if (!this.showConfigurableOptions) {
       this.form.get('rounds')?.reset();
@@ -63,20 +71,17 @@ export class GameHubComponent implements OnInit{
     this.isFormOpen = false;
     this.form.reset();
   }
-  showConfigurableOptions = false;
+
   
   constructor() {
    this.initializeForm();
   }
- 
-
-
 
 initializeForm(){
   this.form = new FormGroup({
     name: new FormControl('', { validators: [Validators.required] }),
     password: new FormControl(''),
-    maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(16)] }),
+    maxcounts: new FormControl('', { validators: [Validators.required, Validators.max(11)] }),
     gameType: new FormControl('კლასიკური', [Validators.required]),
     rounds: new FormControl('',{ validators: [Validators.required, Validators.max(33)] }) ,
     firstname: new FormControl(false), // Checkbox for firstname
