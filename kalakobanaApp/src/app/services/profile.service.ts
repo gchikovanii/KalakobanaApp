@@ -13,11 +13,11 @@ export class ProfileService {
   http = inject(HttpClient);
   
   updateProfile(profileData: UpdateProfileDto): Observable<any> {
-    return this.http.post(`${this.apiUrl}/update-profile`, profileData);
+    return this.http.post(`${this.apiUrl}/update-profile`, profileData, { withCredentials: true });
   }
 
   getProfile(): Observable<UserDto> {
-    return this.http.get<UserDto>(`${this.apiUrl}/get-profile`);
+    return this.http.get<UserDto>(`${this.apiUrl}/get-profile`, { withCredentials: true });
   }
 
 }

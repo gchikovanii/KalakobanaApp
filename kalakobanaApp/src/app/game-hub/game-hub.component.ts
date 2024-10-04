@@ -131,7 +131,6 @@ export class GameHubComponent implements OnInit{
           includeRiver: formData.river
         }
       };
-      console.log(requestData);
       this.roomService.createRoom(requestData).subscribe(
         (response) => {
           console.log('Room created successfully', response);
