@@ -1,4 +1,5 @@
 export interface CreateRoomRequest {
+    id:string;
     name: string;
     password?: string;
     maxUsersInRoomCount: number;

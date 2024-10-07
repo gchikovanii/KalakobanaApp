@@ -1,5 +1,11 @@
 <app-navbar />
   <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-blue-900 dark:to-cyan-800 min-h-screen p-4">
+    @if(isSubmitting()){
+      <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="loader">დამუშავება...</div> 
+      </div>
+    }
+    
     <div class="text-xl font-bold dark:text-white mb-4">
       ოთახების სია - {{ roomResponses.length }} ოთახი აქტიურია
     </div>

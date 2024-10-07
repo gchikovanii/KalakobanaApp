@@ -10,5 +10,5 @@ export const routes: Routes = [
     {path: '', component: WelcomeComponent, canActivate:[LoggedInRedirectGuard]},
     {path: 'profile', component: ProfileComponent,  canActivate: [AuthGuard]},
     {path: 'game-hub', component: GameHubComponent,  canActivate: [AuthGuard]},
-    {path: 'room', component: RoomComponent,  canActivate: [AuthGuard]}
+    { path: 'room/:id', component: RoomComponent, canActivate: [AuthGuard] } 
 ];

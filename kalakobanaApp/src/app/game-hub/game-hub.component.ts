@@ -6,10 +6,11 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { HttpClient } from '@angular/common/http';
 import { RoomService } from '../services/room.service';
 import { GameMode } from '../Models/GameMode';
-import { Room } from '../Models/room';
 import { RoomResponse } from '../Models/roomRespose';
 import { RoomLoaderComponent } from "../room-loader/room-loader.component";
-
+import {
+  MatSnackBar
+} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-game-hub',
   standalone: true,
@@ -71,10 +72,13 @@ export class GameHubComponent implements OnInit{
   form!: FormGroup;
   router = inject(Router);
   roomService = inject(RoomService);
+  snackbar = inject(MatSnackBar);
+  isSubmitting = signal(false);
   selectRoom(room: any) {
     this.selectedRoom = room;
   }
    submit() {
+    this.isSubmitting.set(true); 
     if (this.form.valid) {
       const formData = this.form.value;
       if(formData.firstname == false && formData.lastname == false  && formData.city == false&& formData.country == false
@@ -118,7 +122,7 @@ export class GameHubComponent implements OnInit{
          // assuming `gameType` corresponds to `GameMode`
         rounds: formData.rounds,
         adminId: 'AdminMocked', 
-  
+        id: '',
         // Group the boolean values into the `settings` object
         settings: {
           includeFirstName: formData.firstname,
@@ -133,10 +137,16 @@ export class GameHubComponent implements OnInit{
       };
       this.roomService.createRoom(requestData).subscribe(
         (response) => {
-          console.log('Room created successfully', response);
+          this.isSubmitting.set(true); 
+          this.router.navigate([`/room`, response.roomId]);
+          
         },
         (error) => {
-          console.error('Error creating room', error);
+          this.isSubmitting.set(true); 
+          this.snackbar.open(error.error || 'შეცდომა ოთახის შექმნისას', 'დახურვა', {
+            duration: 3000,
+            panelClass: ['red-snackbar']
+          });
         }
       );
 
