@@ -26,6 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@material/snackbar": "^14.0.0",
+    "@microsoft/signalr": "^8.0.7",
     "oidc-client": "^1.11.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
