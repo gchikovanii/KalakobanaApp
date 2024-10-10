@@ -25,19 +25,20 @@ export class RoomService {
   getRoomByName(roomName: string): Observable<Room> {
     return this.http.get<Room>(`${this.apiUrl}/by-name/${roomName}`, { withCredentials: true });
   }
-  // Create a new room
-  createRoom(roomRequest: CreateRoomRequest): Observable<Room> {
-    return this.http.post<Room>(`${this.apiUrl}`, roomRequest, { withCredentials: true });
-  }
+
   // Remove a room by name
   deleteRoomByName(roomName: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/by-name/${roomName}`, { withCredentials: true });
   }
-
-  // Join room signal handler
-  joinRoom(joinRoomRequest: JoinRoomRequest): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/join`, joinRoomRequest, { withCredentials: true });
+  // Create a new room
+  createRoom(roomRequest: CreateRoomRequest): Observable<Room> {
+    return this.http.post<Room>(`${this.apiUrl}`, roomRequest, { withCredentials: true });
   }
+ // Join room method
+  joinRoom(joinRoomRequest: JoinRoomRequest): Observable<RoomResponse> {
+    return this.http.post<RoomResponse>(`${this.apiUrl}/join`, joinRoomRequest, { withCredentials: true });
+  }
+
 
   // Leave a room
   leaveRoom(leaveRoomRequest: LeaveRoomRequest): Observable<void> {

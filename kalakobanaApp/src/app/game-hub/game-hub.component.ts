@@ -152,6 +152,19 @@ export class GameHubComponent implements OnInit{
 
     }
   }
+  joinExistingRoom(roomName: string, password: string | null) {
+    const joinRoomRequest = { roomName, password };
+    this.roomService.joinRoom(joinRoomRequest).subscribe(
+      (response) => {
+        console.log('Joined room:', response);
+        this.router.navigate([`/room/${response.id}`]); // Redirect to the room
+      },
+      (error) => {
+        console.error('ოთახში შესვლა ვერ მოხერხდა:', error);
+      }
+    );
+  }
+
   onGameTypeChange() {
     this.form.get('name')?.reset();
     this.form.get('password')?.reset();
@@ -257,14 +270,23 @@ checkIndividual() {
     this.selectedRoom = null;
   }
 
+  // confirmRedirect() {
+  //   if (this.selectedRoom.isPrivate && !this.isPasswordValid()) {
+  //     this.isPasswordIncorrect = true;
+  //     this.router.navigate(['/room']);
+  //     return;
+  //   }
+  //   // Perform the redirect logic here
+  //   this.router.navigate(['/room']);
+  //   this.closeRedirectModal();
+  // }
   confirmRedirect() {
-    if (this.selectedRoom.isPrivate && !this.isPasswordValid()) {
-      this.isPasswordIncorrect = true;
-      this.router.navigate(['/room']);
-      return;
-    }
-    // Perform the redirect logic here
-    this.router.navigate(['/room']);
+
+    debugger;
+    // Call joinExistingRoom with the selected room name and password (if private), or null (if public)
+    this.joinExistingRoom(this.selectedRoom.name, this.selectedRoom.password);
+  
+    // Close the modal after attempting to join the room
     this.closeRedirectModal();
   }
 
