@@ -269,29 +269,8 @@ checkIndividual() {
     this.isRedirectModalOpen = false;
     this.selectedRoom = null;
   }
-
-  // confirmRedirect() {
-  //   if (this.selectedRoom.isPrivate && !this.isPasswordValid()) {
-  //     this.isPasswordIncorrect = true;
-  //     this.router.navigate(['/room']);
-  //     return;
-  //   }
-  //   // Perform the redirect logic here
-  //   this.router.navigate(['/room']);
-  //   this.closeRedirectModal();
-  // }
   confirmRedirect() {
-
-    debugger;
-    // Call joinExistingRoom with the selected room name and password (if private), or null (if public)
     this.joinExistingRoom(this.selectedRoom.name, this.selectedRoom.password);
-  
-    // Close the modal after attempting to join the room
     this.closeRedirectModal();
-  }
-
-  isPasswordValid() {
-    // Add the logic to validate the password here
-    return this.enteredPassword === 'test'; 
   }
 }

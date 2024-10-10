@@ -284,7 +284,7 @@
         </div>
   
         <!-- If room is private, show password input -->
-        @if(selectedRoom?.isPrivate){
+        @if(selectedRoom?.password !== null){
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">შეიყვანეთ პაროლი</label>
             <input
@@ -301,7 +301,7 @@
   
         <div class="flex justify-end space-x-2">
           <button (click)="closeRedirectModal()" type="button" class="px-4 py-2 bg-gray-500 hover:bg-gray-400 text-white rounded-lg">არა</button>
-          <button (click)="confirmRedirect()" [disabled]="selectedRoom?.isPrivate && !isPasswordValid()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">დიახ</button>
+          <button (click)="confirmRedirect()" [disabled]="selectedRoom?.isPrivate" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">დიახ</button>
         </div>
       </div>
     </div>
