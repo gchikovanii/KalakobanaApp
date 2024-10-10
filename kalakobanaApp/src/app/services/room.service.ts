@@ -35,8 +35,8 @@ export class RoomService {
     return this.http.post<Room>(`${this.apiUrl}`, roomRequest, { withCredentials: true });
   }
  // Join room method
-  joinRoom(joinRoomRequest: JoinRoomRequest): Observable<RoomResponse> {
-    return this.http.post<RoomResponse>(`${this.apiUrl}/join`, joinRoomRequest, { withCredentials: true });
+  joinRoom(joinRoomRequest: JoinRoomRequest): Observable<Room> {
+    return this.http.post<Room>(`${this.apiUrl}/join`, joinRoomRequest, { withCredentials: true });
   }
 
 

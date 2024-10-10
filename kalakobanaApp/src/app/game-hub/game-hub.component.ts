@@ -157,7 +157,7 @@ export class GameHubComponent implements OnInit{
     this.roomService.joinRoom(joinRoomRequest).subscribe(
       (response) => {
         console.log('Joined room:', response);
-        this.router.navigate([`/room/${response.id}`]); // Redirect to the room
+        this.router.navigate([`/room/${response.roomId}`]); // Redirect to the room
       },
       (error) => {
         console.error('ოთახში შესვლა ვერ მოხერხდა:', error);
