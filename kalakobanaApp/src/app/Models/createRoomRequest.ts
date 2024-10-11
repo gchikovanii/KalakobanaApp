@@ -17,3 +17,7 @@ export interface CreateRoomRequest {
       includeRiver: boolean;
     };
   }
+
+  export interface LeaveRoomRequest{
+    roomName: string;
+  }

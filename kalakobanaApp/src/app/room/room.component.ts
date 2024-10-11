@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheckDouble, faCommentDots, faPaperPlane, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';  
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { faPersonBooth } from '@fortawesome/free-solid-svg-icons';
+import { RoomService } from '../services/room.service';
+import { LeaveRoomRequest } from '../Models/createRoomRequest';
 @Component({
   selector: 'app-room',
   standalone: true,
@@ -76,12 +78,34 @@ export class RoomComponent implements OnInit {
       result: '40'
     }
   ];
-  
+  roomService = inject(RoomService);
+  route = inject(ActivatedRoute);
+  roomName!: string;
   logOut() {
-    this.router.navigate(['/game-hub']);
+    if (!this.roomName) {
+      console.error('Room Name not found in the URL');
+      return;
+    }
+
+    const leaveRoomRequest: LeaveRoomRequest = {
+      roomName: this.roomName // Sending roomName to backend
+    };
+
+    this.roomService.leaveRoom(leaveRoomRequest).subscribe({
+      next: () => {
+        // Redirect to /game-hub upon successful request
+        console.log('Successfully left the room');
+        this.router.navigate(['/game-hub']);
+      },
+      error: (err) => {
+        // Handle any errors here
+        console.error('Failed to leave the room', err);
+      }
+    });
   }
 
   ngOnInit() {
+    this.roomName = this.route.snapshot.paramMap.get('id') ?? '';
     for (let i = 0; i < this.totalRounds; i++) {
       this.rows.push({
         firstName: '',
