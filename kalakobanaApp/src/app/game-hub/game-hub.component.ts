@@ -121,7 +121,7 @@ export class GameHubComponent implements OnInit{
         gameMode: formData.gameType, 
          // assuming `gameType` corresponds to `GameMode`
         rounds: formData.rounds,
-        adminId: 'AdminMocked', 
+        adminId: 'AdminDataMocked', 
         id: '',
         // Group the boolean values into the `settings` object
         settings: {
@@ -160,7 +160,10 @@ export class GameHubComponent implements OnInit{
         this.router.navigate([`/room/${response.roomId}`]); // Redirect to the room
       },
       (error) => {
-        console.error('ოთახში შესვლა ვერ მოხერხდა:', error);
+        this.snackbar.open(error.error || 'ოთახში შესვლა ვერ მოხერხდა', 'დახურვა', {
+          duration: 3000,
+          panelClass: ['red-snackbar']
+        });
       }
     );
   }
