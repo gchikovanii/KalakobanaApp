@@ -267,7 +267,7 @@ checkIndividual() {
     this.selectedRoom = null;
   }
   confirmRedirect() {
-    this.joinExistingRoom(this.selectedRoom.name, this.selectedRoom.password);
+    this.joinExistingRoom(this.selectedRoom.name, this.enteredPassword);
     this.closeRedirectModal();
   }
 }
