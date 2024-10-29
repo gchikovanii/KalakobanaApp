@@ -153,6 +153,7 @@ export class GameHubComponent implements OnInit{
     }
   }
   joinExistingRoom(roomName: string, password: string | null) {
+    debugger;
     const joinRoomRequest = { roomName, password };
     this.roomService.joinRoom(joinRoomRequest).subscribe(
       (response) => {
@@ -273,6 +274,7 @@ checkIndividual() {
     this.selectedRoom = null;
   }
   confirmRedirect() {
+    console.log(this.selectedRoom);
     this.joinExistingRoom(this.selectedRoom.name, this.selectedRoom.password);
     this.closeRedirectModal();
   }

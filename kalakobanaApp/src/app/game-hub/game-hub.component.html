@@ -301,7 +301,7 @@
   
         <div class="flex justify-end space-x-2">
           <button (click)="closeRedirectModal()" type="button" class="px-4 py-2 bg-gray-500 hover:bg-gray-400 text-white rounded-lg">არა</button>
-          <button (click)="confirmRedirect()" [disabled]="selectedRoom?.isPrivate" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">დიახ</button>
+          <button (click)="confirmRedirect()" [disabled]="selectedRoom?.password && enteredPassword === ''" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">დიახ</button>
         </div>
       </div>
     </div>
