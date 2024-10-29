@@ -153,7 +153,7 @@ export class GameHubComponent implements OnInit{
     }
   }
   joinExistingRoom(roomName: string, password: string | null) {
-    debugger;
+    this.isSubmitting.set(true);
     const joinRoomRequest = { roomName, password };
     this.roomService.joinRoom(joinRoomRequest).subscribe(
       (response) => {
@@ -165,6 +165,8 @@ export class GameHubComponent implements OnInit{
           duration: 3000,
           panelClass: ['red-snackbar']
         });
+        this.isSubmitting.set(false);
+
       }
     );
   }
@@ -274,7 +276,6 @@ checkIndividual() {
     this.selectedRoom = null;
   }
   confirmRedirect() {
-    console.log(this.selectedRoom);
     this.joinExistingRoom(this.selectedRoom.name, this.selectedRoom.password);
     this.closeRedirectModal();
   }
