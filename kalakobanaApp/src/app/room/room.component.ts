@@ -31,6 +31,7 @@ import { LeaveRoomRequest } from '../Models/createRoomRequest';
 export class RoomComponent implements OnInit {
   faSignOutAlt = faSignOutAlt;
   faPaperPlane = faPaperPlane;
+  isLeaving = signal(false);
   router = inject(Router);
   roundIsFinished = signal(false);
   faThumbs = faCheckDouble;
@@ -82,6 +83,7 @@ export class RoomComponent implements OnInit {
   route = inject(ActivatedRoute);
   roomName!: string;
   logOut() {
+    this.isLeaving.set(true);
     if (!this.roomName) {
       console.error('Room Name not found in the URL');
       return;
@@ -100,6 +102,7 @@ export class RoomComponent implements OnInit {
       error: (err) => {
         // Handle any errors here
         console.error('Failed to leave the room', err);
+        this.isLeaving.set(false);
       }
     });
   }

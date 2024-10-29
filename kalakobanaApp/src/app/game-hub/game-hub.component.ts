@@ -60,14 +60,6 @@ export class GameHubComponent implements OnInit{
         return 'უცნობი'; // Unknown
     }
   }
-
- 
-
-  // rooms = [
-  //   { id: 1,name: 'სატესტო ოთახი 1', players: 1, maxPlayers: 10, isPrivate: false, mode: 'კლასიკური',gameStatus: false, },
-  //   {id: 2, name: 'სატესტო ოთახი 2', players: 2, maxPlayers: 5, isPrivate: true, mode: 'გადარჩენა',gameStatus: false,},
-  // ];
-
   selectedRoom: any = null;
   form!: FormGroup;
   router = inject(Router);
@@ -166,7 +158,6 @@ export class GameHubComponent implements OnInit{
           panelClass: ['red-snackbar']
         });
         this.isSubmitting.set(false);
-
       }
     );
   }
