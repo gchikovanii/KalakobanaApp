@@ -8,6 +8,7 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
 import { faPersonBooth } from '@fortawesome/free-solid-svg-icons';
 import { RoomService } from '../services/room.service';
 import { LeaveRoomRequest } from '../Models/createRoomRequest';
+import { HubService } from '../services/hub.service';
 @Component({
   selector: 'app-room',
   standalone: true,
@@ -123,8 +124,13 @@ export class RoomComponent implements OnInit {
         completed: false 
       });
     }
+    this.roomHub.userJoined$.subscribe((message: string) => {
+      this.joinedUsers.push(message);
+      console.log(message);
+    });
+    
   }
-
+  roomHub = inject(HubService);
   generateNewLetter(): string {
     let letter = this.alphabet[Math.floor(Math.random() * this.alphabet.length)];
 
@@ -206,4 +212,10 @@ export class RoomComponent implements OnInit {
   onAnimationEnd() {
     this.letterAnimated = false;
   }
+
+
+  joinedUsers: string[] = [];
+
+
+
 }

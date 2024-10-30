@@ -11,6 +11,7 @@ import { RoomLoaderComponent } from "../room-loader/room-loader.component";
 import {
   MatSnackBar
 } from '@angular/material/snack-bar';
+import { HubService } from '../services/hub.service';
 @Component({
   selector: 'app-game-hub',
   standalone: true,
@@ -149,7 +150,6 @@ export class GameHubComponent implements OnInit{
     const joinRoomRequest = { roomName, password };
     this.roomService.joinRoom(joinRoomRequest).subscribe(
       (response) => {
-        console.log('Joined room:', response);
         this.router.navigate([`/room/${response.roomId}`]); // Redirect to the room
       },
       (error) => {
@@ -203,7 +203,7 @@ export class GameHubComponent implements OnInit{
     this.form.reset();
   }
 
-  
+  hubService = inject(HubService);
   constructor() {
    this.initializeForm();
   }
@@ -268,6 +268,7 @@ checkIndividual() {
   }
   confirmRedirect() {
     this.joinExistingRoom(this.selectedRoom.name, this.enteredPassword);
+    this.hubService.joinRoom(this.selectRoom.name,"Test",this.enteredPassword);
     this.closeRedirectModal();
   }
 }
