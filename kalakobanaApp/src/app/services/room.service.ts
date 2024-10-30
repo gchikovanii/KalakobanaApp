@@ -4,15 +4,12 @@ import { Observable } from 'rxjs';
 import { Room } from '../Models/room';
 import { CreateRoomRequest } from '../Models/createRoomRequest';
 import { RoomResponse } from '../Models/roomRespose';
-import * as signalR from '@microsoft/signalr';
 import { JoinRoomRequest, LeaveRoomRequest } from '../Models/JoinRoomRequest';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
-  private hubConnection: signalR.HubConnection | undefined;
-
   private apiUrl = 'https://localhost:7250/bff/room'; 
 
   constructor(private http: HttpClient) {}
