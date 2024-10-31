@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { Room } from '../Models/room';
 import { CreateRoomRequest } from '../Models/createRoomRequest';
 import { RoomResponse } from '../Models/roomRespose';
@@ -38,7 +38,14 @@ export class RoomService {
 
 
   // Leave a room
-  leaveRoom(leaveRoomRequest: LeaveRoomRequest): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/leave`, leaveRoomRequest, { withCredentials: true });
+  async leaveRoom(leaveRoomRequest: LeaveRoomRequest): Promise<void> {
+    try {
+      await lastValueFrom(
+        this.http.post<void>(`${this.apiUrl}/leave`, leaveRoomRequest, { withCredentials: true })
+      );
+    } catch (error) {
+      console.error('Error leaving room:', error);
+      throw error; // Rethrow to handle in calling function if needed
+    }
   }
 }

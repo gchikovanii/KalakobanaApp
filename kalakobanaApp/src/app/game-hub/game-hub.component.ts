@@ -141,7 +141,7 @@ export class GameHubComponent implements OnInit{
   
       try {
         const response = await this.roomService.createRoom(requestData).toPromise();
-        
+        console.log(response);
         this.isSubmitting.set(true); 
         try {
           await this.hubService.createAndJoinRoom(requestData.name);
@@ -161,21 +161,27 @@ export class GameHubComponent implements OnInit{
       }
     }
   }
-  joinExistingRoom(roomName: string, password: string | null) {
+  joinExistingRoom(roomName: string, password: string | null): Promise<boolean> {
     this.isSubmitting.set(true);
     const joinRoomRequest = { roomName, password };
-    this.roomService.joinRoom(joinRoomRequest).subscribe(
-      (response) => {
-        this.router.navigate([`/room/${response.roomId}`]); // Redirect to the room
-      },
-      (error) => {
-        this.snackbar.open(error.error || 'ოთახში შესვლა ვერ მოხერხდა', 'დახურვა', {
-          duration: 3000,
-          panelClass: ['red-snackbar']
-        });
-        this.isSubmitting.set(false);
-      }
-    );
+  
+    return new Promise((resolve) => {
+      this.roomService.joinRoom(joinRoomRequest).subscribe(
+        (response) => {
+          this.router.navigate([`/room/${response.roomId}`]);
+          this.isSubmitting.set(false); // Resetting the submitting state
+          resolve(true); // Successfully joined the room
+        },
+        (error) => {
+          this.snackbar.open(error.error || 'ოთახში შესვლა ვერ მოხერხდა', 'დახურვა', {
+            duration: 3000,
+            panelClass: ['red-snackbar']
+          });
+          this.isSubmitting.set(false); // Resetting the submitting state
+          resolve(false); // Failed to join the room
+        }
+      );
+    });
   }
 
   onGameTypeChange() {
@@ -285,22 +291,26 @@ checkIndividual() {
   authService = inject(AuthService);
   givenName: string ='';
   confirmRedirect() {
-    this.joinExistingRoom(this.selectedRoom.name, this.enteredPassword);
-    
-    this.authService.getUserProfile().subscribe({
-      next: (userProfile: CustomUserProfile) => {
-        this.givenName = userProfile.given_name;
-        console.log('User Profile fetched:', this.givenName);
-  
-        this.hubService.joinRoom(this.selectedRoom.name, this.givenName, this.enteredPassword)
-          .then(() => {
-            console.log('Joined room successfully');
-            this.closeRedirectModal();
-          })
-          .catch(err => console.error('Error joining room:', err));
-      },
-      error: (err) => {
-        console.error('Failed to fetch user profile:', err);
+    this.joinExistingRoom(this.selectedRoom.name, this.enteredPassword).then(success => {
+      if (success) {
+        this.authService.getUserProfile().subscribe({
+          next: (userProfile: CustomUserProfile) => {
+            this.givenName = userProfile.given_name;
+            console.log('User Profile fetched:', this.givenName);
+      
+            this.hubService.joinRoom(this.selectedRoom.name, this.givenName, this.enteredPassword)
+              .then(() => {
+                console.log('Joined room successfully');
+                this.closeRedirectModal();
+              })
+              .catch(err => console.error('Error joining room:', err));
+          },
+          error: (err) => {
+            console.error('Failed to fetch user profile:', err);
+          }
+        });
+      } else {
+        console.log('Failed to join the room');
       }
     });
   }

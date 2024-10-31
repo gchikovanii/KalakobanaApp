@@ -10,6 +10,8 @@ import { RoomService } from '../services/room.service';
 import { LeaveRoomRequest } from '../Models/createRoomRequest';
 import { HubService } from '../services/hub.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../services/auth.service';
+import { CustomUserProfile } from '../Models/userprofile';
 @Component({
   selector: 'app-room',
   standalone: true,
@@ -83,8 +85,13 @@ export class RoomComponent implements OnInit {
   ];
   roomService = inject(RoomService);
   route = inject(ActivatedRoute);
+  authService = inject(AuthService);
   roomName!: string;
-  logOut() {
+  givenName: string = '';
+  
+  
+  
+  async logOut() {
     this.isLeaving.set(true);
     if (!this.roomName) {
       console.error('Room Name not found in the URL');
@@ -95,18 +102,29 @@ export class RoomComponent implements OnInit {
       roomName: this.roomName // Sending roomName to backend
     };
 
-    this.roomService.leaveRoom(leaveRoomRequest).subscribe({
-      next: () => {
-        // Redirect to /game-hub upon successful request
-        console.log('Successfully left the room');
-        this.router.navigate(['/game-hub']);
-      },
-      error: (err) => {
-        // Handle any errors here
-        console.error('Failed to leave the room', err);
-        this.isLeaving.set(false);
-      }
-    });
+
+    try {
+      this.authService.getUserProfile().subscribe({
+        next: (userProfile: CustomUserProfile) => {
+          this.givenName = userProfile.given_name;
+          Promise.all([
+            this.roomService.leaveRoom(leaveRoomRequest),
+            this.roomHub.leaveRoom(this.roomName, this.givenName)
+          ]);
+      
+          // Navigate to /game-hub upon successful request completion
+          this.router.navigate(['/game-hub']);
+        },
+        error: (err) => {
+          console.error('Failed to fetch user profile:', err);
+        }
+      });
+     
+    } catch (error) {
+      // Handle errors for both calls
+      console.error('Failed to leave the room', error);
+      this.isLeaving.set(false);
+    }
   }
 
   ngOnInit() {
@@ -125,6 +143,7 @@ export class RoomComponent implements OnInit {
         completed: false 
       });
     }
+    
     this.roomHub.userJoined$.subscribe({
       next: (message: string) => {
         this.joinedUsers.push(message);
@@ -136,7 +155,16 @@ export class RoomComponent implements OnInit {
       },
       error: (err) => console.error('Error receiving message:', err)
     });
-    
+    this.roomHub.userLeft$.subscribe({
+      next: (message: string) => {
+          console.log('User left event received:', message);  // Log message
+          this.snackbar.open(message || 'მომხარებელი გავიდა', 'დახურვა', {
+              duration: 3000,
+              panelClass: ['red-snackbar']
+          });
+      },
+      error: (err) => console.error('Error receiving leave message:', err)
+  });  
   }
   
   roomHub = inject(HubService);
@@ -223,10 +251,6 @@ export class RoomComponent implements OnInit {
   onAnimationEnd() {
     this.letterAnimated = false;
   }
-
-
   joinedUsers: string[] = [];
-
-
 
 }

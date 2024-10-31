@@ -9,7 +9,9 @@ import { Subject } from 'rxjs';
 export class HubService {
   private hubConnection: signalR.HubConnection | undefined;
   private userJoinedSource = new Subject<string>();
-  userJoined$ = this.userJoinedSource.asObservable(); // Observable to subscribe to
+  userJoined$ = this.userJoinedSource.asObservable(); 
+  private userLeftSource = new Subject<string>();  
+  userLeft$ = this.userLeftSource.asObservable();  
 
   constructor() {
     this.startConnection();
@@ -37,16 +39,19 @@ export class HubService {
       this.hubConnection.on('ReceiveMessage', (message: string) => {
         this.userJoinedSource.next(message);
       });
+      this.hubConnection.on('UserLeft', (message: string) => { 
+        this.userLeftSource.next(message);
+      });
     } catch (error) {
       console.error('Error connecting to SignalR:', error);
     }
+    
   }
 
   async joinRoom(roomName: string, userId: string, password: string | null = null): Promise<void> {
     if (this.hubConnection) {
       try {
         await this.hubConnection.invoke('JoinRoom', roomName, userId, password);
-        console.log(`Joined room: ${roomName} as user ${userId}`);
       } catch (error) {
         console.error('Error joining room:', error);
       }
@@ -59,7 +64,6 @@ export class HubService {
     if (this.hubConnection) {
       try {
         await this.hubConnection.invoke('CreateAndJoinRoom', roomName );
-        console.log(`Room created and joined: ${roomName}`);
       } catch (error) {
         console.error('Error creating and joining room:', error);
       }
@@ -71,7 +75,6 @@ export class HubService {
     if (this.hubConnection) {
       try {
         await this.hubConnection.invoke('LeaveRoom', roomName, userId);
-        console.log(`Left room: ${roomName} as user ${userId}`);
       } catch (error) {
         console.error('Error leaving room:', error);
       }
