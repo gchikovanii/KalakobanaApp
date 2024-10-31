@@ -12,6 +12,8 @@ import {
   MatSnackBar
 } from '@angular/material/snack-bar';
 import { HubService } from '../services/hub.service';
+import { AuthService } from '../services/auth.service';
+import { CustomUserProfile } from '../Models/userprofile';
 @Component({
   selector: 'app-game-hub',
   standalone: true,
@@ -70,26 +72,35 @@ export class GameHubComponent implements OnInit{
   selectRoom(room: any) {
     this.selectedRoom = room;
   }
-   submit() {
+  async submit() {
     this.isSubmitting.set(true); 
     if (this.form.valid) {
       const formData = this.form.value;
-      if(formData.firstname == false && formData.lastname == false  && formData.city == false&& formData.country == false
-        && formData.animal == false && formData.plant == false && formData.river == false
-      ){
-        formData.firstname = true;formData.lastname = true;formData.city = true;formData.country = true;formData.animal = true;formData.plant = true;formData.river = true;
+  
+      if (
+        formData.firstname == false && formData.lastname == false &&
+        formData.city == false && formData.country == false &&
+        formData.animal == false && formData.plant == false &&
+        formData.river == false
+      ) {
+        formData.firstname = true;
+        formData.lastname = true;
+        formData.city = true;
+        formData.country = true;
+        formData.animal = true;
+        formData.plant = true;
+        formData.river = true;
       }
-      //handle logic here
-      if(formData.gameType === 'კლასიკური'){
+  
+      // Handle gameType logic here
+      if (formData.gameType === 'კლასიკური') {
         formData.rounds = 15;
-      }
-      else if(formData.gameType === 'დუელი'){
+      } else if (formData.gameType === 'დუელი') {
         formData.maxCounts = 2;
-      }
-      else if(formData.gameType === 'ლიკვიდატორი'){
+      } else if (formData.gameType === 'ლიკვიდატორი') {
         formData.rounds = Number(formData.maxcounts) * 3;
       }
-      
+  
       switch (formData.gameType) {
         case 'კლასიკური':
           formData.gameType = GameMode.Classic;
@@ -100,23 +111,22 @@ export class GameHubComponent implements OnInit{
         case 'ლიკვიდატორი':
           formData.gameType = GameMode.Liquidator;
           break;
-          case 'კონფიგურატორი':
-            formData.gameType = GameMode.Customizable;
-            break;
+        case 'კონფიგურატორი':
+          formData.gameType = GameMode.Customizable;
+          break;
         default:
           console.error('Unknown game type');
           return;
       }
+  
       const requestData = {
         name: formData.name,
         password: formData.password,
         maxUsersInRoomCount: formData.maxcounts, // assuming `maxcounts` corresponds to `MaxUsersInRoomCount`
-        gameMode: formData.gameType, 
-         // assuming `gameType` corresponds to `GameMode`
+        gameMode: formData.gameType, // assuming `gameType` corresponds to `GameMode`
         rounds: formData.rounds,
-        adminId: 'AdminDataMocked', 
+        adminId: 'AdminDataMocked',
         id: '',
-        // Group the boolean values into the `settings` object
         settings: {
           includeFirstName: formData.firstname,
           includeLastName: formData.lastname,
@@ -128,21 +138,27 @@ export class GameHubComponent implements OnInit{
           includeRiver: formData.river
         }
       };
-      this.roomService.createRoom(requestData).subscribe(
-        (response) => {
-          this.isSubmitting.set(true); 
-          this.router.navigate([`/room`, response.roomId]);
-          
-        },
-        (error) => {
-          this.isSubmitting.set(true); 
-          this.snackbar.open(error.error || 'შეცდომა ოთახის შექმნისას', 'დახურვა', {
-            duration: 3000,
-            panelClass: ['red-snackbar']
-          });
+  
+      try {
+        const response = await this.roomService.createRoom(requestData).toPromise();
+        
+        this.isSubmitting.set(true); 
+        try {
+          await this.hubService.createAndJoinRoom(requestData.name);
+          console.log("Room created and joined");
+        } catch (err) {
+          console.error('Error joining room as admin:', err);
         }
-      );
-
+  
+        this.router.navigate([`/room`, response!.roomId]);
+        
+      } catch (error) {
+        this.isSubmitting.set(true); 
+        this.snackbar.open('შეცდომა ოთახის შექმნისას', 'დახურვა', {
+          duration: 3000,
+          panelClass: ['red-snackbar']
+        });
+      }
     }
   }
   joinExistingRoom(roomName: string, password: string | null) {
@@ -266,9 +282,26 @@ checkIndividual() {
     this.isRedirectModalOpen = false;
     this.selectedRoom = null;
   }
+  authService = inject(AuthService);
+  givenName: string ='';
   confirmRedirect() {
     this.joinExistingRoom(this.selectedRoom.name, this.enteredPassword);
-    this.hubService.joinRoom(this.selectRoom.name,"Test",this.enteredPassword);
-    this.closeRedirectModal();
+    
+    this.authService.getUserProfile().subscribe({
+      next: (userProfile: CustomUserProfile) => {
+        this.givenName = userProfile.given_name;
+        console.log('User Profile fetched:', this.givenName);
+  
+        this.hubService.joinRoom(this.selectedRoom.name, this.givenName, this.enteredPassword)
+          .then(() => {
+            console.log('Joined room successfully');
+            this.closeRedirectModal();
+          })
+          .catch(err => console.error('Error joining room:', err));
+      },
+      error: (err) => {
+        console.error('Failed to fetch user profile:', err);
+      }
+    });
   }
 }

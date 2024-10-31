@@ -7,60 +7,46 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HubService {
-  // private hubConnection!: signalR.HubConnection;
-  // private startHubConnection() {
-  //   this.hubConnection = new signalR.HubConnectionBuilder()
-  //     .withUrl(`https://localhost:7056/roomHub`, {
-  //       withCredentials: true 
-  //     }) 
-  //     .build();
-
-  //   this.hubConnection
-  //     .start()
-  //     .then(() => console.log('SignalR Hub connection started.'))
-  //     .catch(error => console.error('Error establishing SignalR connection:', error));
-
-  //   // Listen for messages from the server
-  //   this.hubConnection.on('ReceiveMessage', (message: string) => {
-  //     console.log('Message received:', message);
-  //     // Handle the incoming message (e.g., display it in the UI)
-  //   });
-
-  //   this.hubConnection.on('ReceiveMessageUerLeft', (message: string) => {
-  //     console.log('User left message received:', message);
-  //     // Handle the user left message
-  //   });
-  // }
   private hubConnection: signalR.HubConnection | undefined;
   private userJoinedSource = new Subject<string>();
   userJoined$ = this.userJoinedSource.asObservable(); // Observable to subscribe to
 
   constructor() {
     this.startConnection();
+    if (this.hubConnection) {
+      this.hubConnection.onclose(async () => {
+        console.log('Disconnected from Hub');
+        // Attempt to reconnect or inform the user
+        await this.startConnection();
+      });
+    }
   }
-
+  
   private async startConnection() {
+    if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
+      return; // Already connected
+    }
+  
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:7056/roomHub', { withCredentials: true })
       .build();
-
+  
     try {
       await this.hubConnection.start();
       console.log('SignalR Connected');
-
-      // Listen for user joined messages
       this.hubConnection.on('ReceiveMessage', (message: string) => {
-        this.userJoinedSource.next(message); // Emit the message
+        this.userJoinedSource.next(message);
       });
     } catch (error) {
       console.error('Error connecting to SignalR:', error);
     }
   }
 
-  async joinRoom(roomName: string, userId: string, password: string | null = null) {
+  async joinRoom(roomName: string, userId: string, password: string | null = null): Promise<void> {
     if (this.hubConnection) {
       try {
         await this.hubConnection.invoke('JoinRoom', roomName, userId, password);
+        console.log(`Joined room: ${roomName} as user ${userId}`);
       } catch (error) {
         console.error('Error joining room:', error);
       }
@@ -72,25 +58,13 @@ export class HubService {
   async createAndJoinRoom(roomName: string) {
     if (this.hubConnection) {
       try {
-        await this.hubConnection.invoke('CreateAndJoinRoom', { Name: roomName });
+        await this.hubConnection.invoke('CreateAndJoinRoom', roomName );
         console.log(`Room created and joined: ${roomName}`);
       } catch (error) {
         console.error('Error creating and joining room:', error);
       }
     }
   }
-
-  // Calls the backend JoinRoom method
-  // async joinRoom(roomName: string, userId: string, password: string | null = null) {
-  //   if (this.hubConnection) {
-  //     try {
-  //       await this.hubConnection.invoke('JoinRoom', roomName, userId, password);
-  //       console.log(`Joined room: ${roomName} as user ${userId}`);
-  //     } catch (error) {
-  //       console.error('Error joining room:', error);
-  //     }
-  //   }
-  // }
 
   // Calls the backend LeaveRoom method
   async leaveRoom(roomName: string, userId: string) {

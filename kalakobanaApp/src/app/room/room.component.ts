@@ -9,6 +9,7 @@ import { faPersonBooth } from '@fortawesome/free-solid-svg-icons';
 import { RoomService } from '../services/room.service';
 import { LeaveRoomRequest } from '../Models/createRoomRequest';
 import { HubService } from '../services/hub.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-room',
   standalone: true,
@@ -124,13 +125,23 @@ export class RoomComponent implements OnInit {
         completed: false 
       });
     }
-    this.roomHub.userJoined$.subscribe((message: string) => {
-      this.joinedUsers.push(message);
-      console.log(message);
+    this.roomHub.userJoined$.subscribe({
+      next: (message: string) => {
+        this.joinedUsers.push(message);
+        console.log(message);
+        this.snackbar.open(message || 'ახალი მომხარებელი შემოვიდა', 'დახურვა', {
+          duration: 3000,
+          panelClass: ['red-snackbar']
+        });
+      },
+      error: (err) => console.error('Error receiving message:', err)
     });
     
   }
+  
   roomHub = inject(HubService);
+  snackbar = inject(MatSnackBar);
+
   generateNewLetter(): string {
     let letter = this.alphabet[Math.floor(Math.random() * this.alphabet.length)];
 
