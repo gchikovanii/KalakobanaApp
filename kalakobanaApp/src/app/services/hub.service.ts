@@ -10,44 +10,80 @@ export class HubService {
   private hubConnection: signalR.HubConnection | undefined;
   private userJoinedSource = new Subject<string>();
   userJoined$ = this.userJoinedSource.asObservable(); 
-  private userLeftSource = new Subject<string>();  
-  userLeft$ = this.userLeftSource.asObservable();  
 
+
+  private userLeftSource = new Subject<string>();
+  userLeft$ = this.userLeftSource.asObservable();
+
+  private roomTerminatedSource = new Subject<string>();
+  roomTerminated$ = this.roomTerminatedSource.asObservable();
   constructor() {
-    this.startConnection();
-    if (this.hubConnection) {
-      this.hubConnection.onclose(async () => {
-        console.log('Disconnected from Hub');
-        // Attempt to reconnect or inform the user
+    this.retryConnection(); // Start initial connection
+  }
+  
+  private async retryConnection() {
+    let retryAttempts = 0;
+    const maxRetries = 5;
+  
+    while (retryAttempts < maxRetries) {
+      // Start or retry the connection only if disconnected
+      if (!this.hubConnection || this.hubConnection.state === signalR.HubConnectionState.Disconnected) {
         await this.startConnection();
-      });
+      }
+  
+      // Check if connected successfully
+      if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
+        console.log("Successfully connected to Hub");
+        break;
+      }
+  
+      // Increment retry count and wait before trying again
+      retryAttempts++;
+      console.warn(`Reconnection attempt ${retryAttempts} failed. Retrying...`);
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait before retrying
+    }
+  
+    if (retryAttempts >= maxRetries) {
+      console.error('Max reconnection attempts reached. Unable to connect to Hub.');
     }
   }
   
-  private async startConnection() {
-    if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
-      return; // Already connected
-    }
+  async startConnection() {
+    if (!this.hubConnection || this.hubConnection.state === signalR.HubConnectionState.Disconnected) {
+      this.hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl('https://localhost:7056/roomHub', { withCredentials: true })
+        .withAutomaticReconnect()
+        .build();
   
-    this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7056/roomHub', { withCredentials: true })
-      .build();
+      try {
+        await this.hubConnection.start();
+        console.log("Connection started");
   
-    try {
-      await this.hubConnection.start();
-      console.log('SignalR Connected');
-      this.hubConnection.on('ReceiveMessage', (message: string) => {
-        this.userJoinedSource.next(message);
-      });
-      this.hubConnection.on('UserLeft', (message: string) => { 
-        this.userLeftSource.next(message);
-      });
-    } catch (error) {
-      console.error('Error connecting to SignalR:', error);
+        // Clear previous listeners to prevent duplication
+        this.hubConnection.off('ReceiveMessageUserLeft');
+        this.hubConnection.off('ReceiveMessage');
+        this.hubConnection.off('ReceiveMessageTerminated');
+  
+        this.hubConnection.on('ReceiveMessageUserLeft', (message: string) => {
+          console.log(`[ReceiveMessageUserLeft] ${new Date().toISOString()} - Message: ${message}`);
+          this.userLeftSource.next(message);
+        });
+        
+        this.hubConnection.on('ReceiveMessage', (message: string) => {
+          console.log(`[ReceiveMessage] ${new Date().toISOString()} - Message: ${message}`);
+          this.userJoinedSource.next(message);
+        });
+        
+        this.hubConnection.on('ReceiveMessageTerminated', (message: string) => {
+          console.log(`[ReceiveMessageTerminated] ${new Date().toISOString()} - Message: ${message}`);
+          this.roomTerminatedSource.next(message);
+        });
+      } catch (error) {
+        console.error('Error connecting to SignalR:', error);
+      }
     }
-    
   }
-
+  
   async joinRoom(roomName: string, userId: string, password: string | null = null): Promise<void> {
     if (this.hubConnection) {
       try {
@@ -69,28 +105,15 @@ export class HubService {
       }
     }
   }
-
   // Calls the backend LeaveRoom method
-  async leaveRoom(roomName: string, userId: string) {
+  async leaveRoom(roomName: string, userId: string): Promise<void> {
     if (this.hubConnection) {
       try {
         await this.hubConnection.invoke('LeaveRoom', roomName, userId);
+        console.log('LeaveRoom invoked on backend');
       } catch (error) {
         console.error('Error leaving room:', error);
       }
     }
   }
-
-  // Calls the backend TerminateProcess method to close the room
-  async terminateProcess(roomName: string) {
-    if (this.hubConnection) {
-      try {
-        await this.hubConnection.invoke('TerminateProcess', roomName);
-        console.log(`Room terminated: ${roomName}`);
-      } catch (error) {
-        console.error('Error terminating room:', error);
-      }
-    }
-  }
- 
 }

@@ -12,6 +12,7 @@ import { HubService } from '../services/hub.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../services/auth.service';
 import { CustomUserProfile } from '../Models/userprofile';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-room',
   standalone: true,
@@ -88,7 +89,8 @@ export class RoomComponent implements OnInit {
   authService = inject(AuthService);
   roomName!: string;
   givenName: string = '';
-  
+  private userLeftSubscription!: Subscription;
+  private roomTerminatedSubscription!: Subscription;
   
   
   async logOut() {
@@ -108,12 +110,12 @@ export class RoomComponent implements OnInit {
         next: (userProfile: CustomUserProfile) => {
           this.givenName = userProfile.given_name;
           Promise.all([
-            this.roomService.leaveRoom(leaveRoomRequest),
-            this.roomHub.leaveRoom(this.roomName, this.givenName)
-          ]);
-      
-          // Navigate to /game-hub upon successful request completion
-          this.router.navigate(['/game-hub']);
+            this.hubService.leaveRoom(this.roomName, this.givenName)
+          ]).then(() => {
+            setTimeout(() => {
+              this.router.navigate(['/game-hub']);
+            }, 3000); // Adjust delay as needed
+          });
         },
         error: (err) => {
           console.error('Failed to fetch user profile:', err);
@@ -144,7 +146,7 @@ export class RoomComponent implements OnInit {
       });
     }
     
-    this.roomHub.userJoined$.subscribe({
+    this.hubService.userJoined$.subscribe({
       next: (message: string) => {
         this.joinedUsers.push(message);
         console.log(message);
@@ -155,19 +157,35 @@ export class RoomComponent implements OnInit {
       },
       error: (err) => console.error('Error receiving message:', err)
     });
-    this.roomHub.userLeft$.subscribe({
+    this.hubService.userLeft$.subscribe({
       next: (message: string) => {
-          console.log('User left event received:', message);  // Log message
-          this.snackbar.open(message || 'მომხარებელი გავიდა', 'დახურვა', {
-              duration: 3000,
-              panelClass: ['red-snackbar']
-          });
+        console.log("User left message received:", message);
+        this.snackbar.open(message || 'მომხმარებელი დატოვა ოთახი', 'დახურვა', {
+          duration: 3000,
+          panelClass: ['red-snackbar']
+        });
       },
-      error: (err) => console.error('Error receiving leave message:', err)
-  });  
+      error: (err) => console.error('Error receiving left message:', err)
+    });
+
+    // Subscribe to room terminated event
+    this.hubService.roomTerminated$.subscribe({
+      next: (message: string) => {
+        this.snackbar.open(message || 'ოთახი გაუქმდა', 'დახურვა', {
+          duration: 3000,
+          panelClass: ['red-snackbar']
+        });
+        // Redirect after the message disappears
+        this.router.navigate(['/game-hub']); 
+      },
+      error: (err) => console.error('Error receiving termination message:', err)
+    });
   }
-  
-  roomHub = inject(HubService);
+  ngOnDestroy(): void {
+    this.userLeftSubscription.unsubscribe();
+    this.roomTerminatedSubscription.unsubscribe();
+  }
+  hubService = inject(HubService);
   snackbar = inject(MatSnackBar);
 
   generateNewLetter(): string {
@@ -247,10 +265,9 @@ export class RoomComponent implements OnInit {
     }
   }
   letterAnimated = false;
-
+  joinedUsers: string[] = [];
   onAnimationEnd() {
     this.letterAnimated = false;
   }
-  joinedUsers: string[] = [];
 
 }
